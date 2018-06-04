@@ -1,0 +1,286 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1')
+    title Monoliths always pay their debts
+
+    link(rel='stylesheet', type='text/css', href='build/build.css')
+
+  body
+
+    article
+
+      section(data-bespoke-backdrop='intro', style='color: white').trans
+        h2(style='margin-left: -70%;').uppercase.left.border-left Monoliths<br/>always<br/>pay their<br/>debts
+        br
+        br
+        br
+        br
+        br
+        br
+        p(style='margin-left: -60%;') by Tomas Della Vedova
+          br
+          a(href="http://twitter.com/delvedor") @delvedor
+
+      section
+        img(src='images/delvedor.png', style='width:100%;')
+
+      section
+        h3 Who are you?
+        i.fa.fa-microphone.fa-5x
+
+      section
+        h2 Roadmap
+        ul.bullet
+          li Monoliths
+          li Microservices
+          li Fastify
+          li Let's build our new startup!
+
+      section(data-bespoke-backdrop='monolith', style='color: white').trans
+        h1.uppercase Monoliths
+
+      section
+        h3 Monoliths
+        h4 Pros
+        ul.bullet
+          li Productivity
+          li Lower complexity
+          li Simplicity
+          li Consistency
+
+      section
+        h3 Monoliths
+        h4 Cons
+        ul.bullet
+          li Big codebase
+          li Hard to change
+          li Hard to scale
+
+      section(data-bespoke-backdrop='microservice', style='color: white').transgray
+        h1.uppercase Microservices
+
+      section
+        h3 Microservices
+        h4 Pros
+        ul.bullet
+          li Partial deployment
+          li Availability
+          li Preserve modularity
+          li Multiple platforms
+
+      section
+        h3 Microservices
+        h4 Cons
+        ul.bullet
+          li Complex
+          li Network will fail
+
+      section(data-bespoke-backdrop='fastify-background', style='color: white').transgray
+        img(src='images/fastify-white-landscape.png', style='width:100%')
+
+      section
+        h3 Fastify
+        p Fastify is a web framework highly focused on providing the best developer experience with the least overhead and a powerful plugin architecture.
+        pre.small
+          code.language-javascript.
+            const fastify = require('fastify')()
+
+            fastify.get('/', async (request, reply) => {
+              return { hello: 'world' }
+            })
+
+            fastify.listen(3000)
+        br
+        a(href="https://www.fastify.io/") fastify.io
+
+      section
+        h2 The API
+        p Let's build the next billion dollar startup, <strong>Moo</strong>!
+        p Basically twitter, but with more characters.
+        p A user should be able to:
+        ul.bullet
+          li Signup!
+          li Post a new <em>moo</em>
+          li Get a <em>moo</em> by id
+          li Get all the <em>moos</em> of a user
+
+      section
+        h3 The API
+        p Let's start easy, use a basic js object as database and do not handle the authentication.
+        p Build three different services, <code>login</code>, <code>moo</code> and <code>user</code>.
+        p Test the services!
+        pre.small
+          code.language-bash.
+            /signup
+            /moo/:id
+            /moo/create
+            /user/:username/moos
+
+      section
+        h3 A little bit of configuration
+        pre
+          code.language-bash.
+            npm install fastify-cli --global
+            mkdir fullstack-workshop
+            cd fullstack-workshop
+            npm init -y
+            fastify generate
+
+      section
+        h3 Project structure
+        ul.bullet
+          li <strong><code>plugins</code></strong>: the folder where you will store all your custom plugins
+          li <strong><code>services</code></strong>: the folder where you will declare all your endpoints
+          li <strong><code>test</code></strong>: the folder where you will declare all your test
+          li <strong><code>app.js</code></strong>: your entry point
+
+      section
+        h3 Scripts
+        ul.bullet
+          li <strong><code>npm start</code></strong>: run your server
+          li <strong><code>npm run colada</code></strong>: run your server with pretty logs<br>(not suitable for production)
+          li <strong><code>npm test</code></strong> run your test suite
+
+      section
+        h2 Database
+        p Thousands of users, the in memory db does not scale and the ram is limited.
+        p We need a database, which one we should use?
+
+      section
+        h3 Database
+        img(src='images/mongodb.png', style='width:80%;')
+
+      section
+        h3 MongoDB
+        ul.bullet
+          li Documental Database
+          li Schemaless and JSON-friendly
+          li There are no JOINs, you have to de-normalize!
+          li Optimized for fast developement!
+
+      section
+        h3 MongoDB
+        p Let's configure our <code>docker-compose.yml</code>
+        pre.small
+          code.language-yml.
+            version: '2'
+            services:
+              mongo:
+                image: mongo:3.6
+                ports:
+                  - "27017:27017"
+        p Or run
+        pre.small
+          code.language-bash.
+            docker run --rm -p 27017:27017 mongo:3.6
+
+      section
+        h3 MongoDB
+        p Add the MongoDB driver to your server
+        pre
+          code.language-bash.
+            npm install fastify-mongodb
+
+      section
+        h3 MongoDB
+        p Let's configure our server
+        pre
+          code.language-javascript.
+            fastify.register(require('fastify-mongodb'), {
+              url: 'mongodb://127.0.0.1/moo'
+            })
+
+      section
+        h3 MongoDB
+        p Update your endpoints to use MongoDB
+
+      section
+        h3 MongoDB
+        pre.small
+          code.language-javascript.
+            const usersCol = fastify.mongo.db.collection('users')
+
+            fastify.post('/signup', async (req, reply) => {
+              const { username, password } = req.body
+              const user = await usersCol.findOne({ username })
+              if (user !== null) {
+                reply.code(400)
+                return new Error(`The user '${username}' already exists`)
+              }
+
+              await usersCol.insertOne({ username, password })
+              reply.code(201)
+              return { status: 'ok' }
+            }
+
+      section
+        h2 Security
+        img(src='images/wonka-md5.jpg', style='width:40%; margin-top: 20px')
+
+      section
+        h3 Security
+        p Use <code>bcrypt</code> to store user passwords
+        pre
+          code.language-bash.
+            npm install bcrypt
+
+      section
+        h3 Security
+        pre.small
+          code.language-javascript.
+            const bcrypt = require('bcrypt')
+            const saltRounds = 10
+            const usersCol = fastify.mongo.db.collection('users')
+
+            fastify.post('/signup', async (req, reply) => {
+              const { username, password } = req.body
+              const user = await usersCol.findOne({ username })
+              if (user !== null) {
+                reply.code(400)
+                return new Error(`The user '${username}' already exists`)
+              }
+
+              const hashedPassword = await bcrypt.hash(password, saltRounds)
+              await usersCol.insertOne({ username, password: hashedPassword })
+              reply.code(201)
+              return { status: 'ok' }
+            }
+
+      section
+        h2 Authentication
+        img(src='images/basic-auth-over-plain-http.jpg', style='width:60%; margin-top: 20px')
+
+      section
+        h3 Authentication
+        p Write a hook to authenticate the user requesta over Basic Auth
+        pre
+          code.language-bash.
+            npm install fastify-basic-auth
+
+      section
+        h3 Authentication
+        p Update the tests to support basic auth authentication
+        pre.small
+          code.language-javascript.
+            // use this function to generate the authentication header value
+            function basicAuth (username, password) {
+              return 'Basic ' + Buffer.from(`${username}:${password}`).toString('base64')
+            }
+
+      section
+        h2 Let's take a look to our monolith
+
+      section
+        h2 From monolith to microservices
+
+      section(data-bespoke-backdrop='intro', style='color: white').trans
+        h2.uppercase Thanks!
+        br
+        p by Tomas Della Vedova
+          br
+          a(href="http://twitter.com/delvedor") @delvedor
+
+    script(src='build/build.js')
+    script(src='http://localhost:35729/livereload.js')
