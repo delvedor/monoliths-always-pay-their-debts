@@ -275,6 +275,33 @@ html
       section
         h2 From monolith to microservices
 
+      section
+        h3 From monolith to microservices
+        img(src='images/monolith-infra.png', style='width:100%; margin-top: 20px')
+
+      section
+        h3 From monolith to microservices
+        img(src='images/services-infra.png', style='width:100%; margin-top: 20px')
+
+      section
+        h3 From monolith to microservices
+        h2 Gateway
+
+      section
+        h3 Gateway
+        <code>npm i fastify-http-proxy</code>
+        pre
+          code.language-javascript.
+            fastify.register(require('fastify-http-proxy'), {
+              upstream: 'http://localhost:3030',
+              prefix: '/post',
+              beforeHandler: fastify.basicAuth
+            })
+
+      section
+        h3 From monolith to microservices
+        img(src='images/gateway-infra.png', style='width:100%;')
+
       section(data-bespoke-backdrop='intro', style='color: white').trans
         h2.uppercase Thanks!
         br
