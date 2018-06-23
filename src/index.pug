@@ -108,7 +108,6 @@ html
 
       section
         h3 The API
-        p Let's start easy, use a basic js object as database and do not handle the authentication.
         p Build three different services, <code>login</code>, <code>moo</code> and <code>user</code>.
         p Test the services!
         pre.small
@@ -144,16 +143,7 @@ html
           li <strong><code>npm test</code></strong> run your test suite
 
       section
-        h2 Database
-        p Thousands of users, the in memory db does not scale and the ram is limited.
-        p We need a database, which one we should use?
-
-      section
-        h3 Database
-        img(src='images/mongodb.png', style='width:80%;')
-
-      section
-        h3 MongoDB
+        img(src='images/mongodb.png', style='width:50%; margin-bottom: 40px;')
         ul.bullet
           li Documental Database
           li Schemaless and JSON-friendly
@@ -193,29 +183,6 @@ html
             })
 
       section
-        h3 MongoDB
-        p Update your endpoints to use MongoDB
-
-      section
-        h3 MongoDB
-        pre.small
-          code.language-javascript.
-            const usersCol = fastify.mongo.db.collection('users')
-
-            fastify.post('/signup', async (req, reply) => {
-              const { username, password } = req.body
-              const user = await usersCol.findOne({ username })
-              if (user !== null) {
-                reply.code(400)
-                return new Error(`The user '${username}' already exists`)
-              }
-
-              await usersCol.insertOne({ username, password })
-              reply.code(201)
-              return { status: 'ok' }
-            }
-
-      section
         h2 Security
         img(src='images/wonka-md5.jpg', style='width:40%; margin-top: 20px')
 
@@ -227,34 +194,12 @@ html
             npm install bcrypt
 
       section
-        h3 Security
-        pre.small
-          code.language-javascript.
-            const bcrypt = require('bcrypt')
-            const saltRounds = 10
-            const usersCol = fastify.mongo.db.collection('users')
-
-            fastify.post('/signup', async (req, reply) => {
-              const { username, password } = req.body
-              const user = await usersCol.findOne({ username })
-              if (user !== null) {
-                reply.code(400)
-                return new Error(`The user '${username}' already exists`)
-              }
-
-              const hashedPassword = await bcrypt.hash(password, saltRounds)
-              await usersCol.insertOne({ username, password: hashedPassword })
-              reply.code(201)
-              return { status: 'ok' }
-            }
-
-      section
         h2 Authentication
         img(src='images/basic-auth-over-plain-http.jpg', style='width:60%; margin-top: 20px')
 
       section
         h3 Authentication
-        p Write a hook to authenticate the user requesta over Basic Auth
+        p Write a hook to authenticate the user request over Basic Auth
         pre
           code.language-bash.
             npm install fastify-basic-auth
