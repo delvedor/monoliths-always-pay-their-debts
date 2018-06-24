@@ -16,12 +16,9 @@ html
         br
         br
         br
-        br
-        br
-        br
-        p(style='margin-left: -60%;') by Tomas Della Vedova
+        p.copyright by Tomas Della Vedova
           br
-          a(href="http://twitter.com/delvedor") @delvedor
+          a(href="http://twitter.com/delvedor" style="color:white") @delvedor
 
       section
         img(src='images/delvedor.png', style='width:100%;')
@@ -33,49 +30,13 @@ html
       section
         h2 Roadmap
         ul.bullet
-          li Monoliths
-          li Microservices
+          li Monoliths vs Microservices
           li Fastify
           li Let's build our new startup!
 
-      section(data-bespoke-backdrop='monolith', style='color: white').trans
-        h1.uppercase Monoliths
-
       section
-        h3 Monoliths
-        h4 Pros
-        ul.bullet
-          li Productivity
-          li Lower complexity
-          li Simplicity
-          li Consistency
-
-      section
-        h3 Monoliths
-        h4 Cons
-        ul.bullet
-          li Big codebase
-          li Hard to change
-          li Hard to scale
-
-      section(data-bespoke-backdrop='microservice', style='color: white').transgray
-        h1.uppercase Microservices
-
-      section
-        h3 Microservices
-        h4 Pros
-        ul.bullet
-          li Partial deployment
-          li Availability
-          li Preserve modularity
-          li Multiple platforms
-
-      section
-        h3 Microservices
-        h4 Cons
-        ul.bullet
-          li Complex
-          li Network will fail
+        h3 Monoliths vs Microservices
+        img(src='images/monoliths-vs-microservices.png', style='width:100%')
 
       section(data-bespoke-backdrop='fastify-background', style='color: white').transgray
         img(src='images/fastify-white-landscape.png', style='width:100%')
@@ -96,6 +57,32 @@ html
         a(href="https://www.fastify.io/") fastify.io
 
       section
+        h3 Fastify
+        h2 Fastify plugins crash guide
+        pre
+          code.language-javascript.
+            fastify.register(
+              require('./my-plugin'),
+              { options }
+            )
+
+      section
+        h3 Fastify plugins crash guide
+        pre
+          code.language-javascript.
+            async function myPlugin (fastify, options) {
+              // register other plugins
+              fastify.register(...)
+              // add hooks
+              fastify.addHook(...)
+              // add routes
+              fastify.route(...)
+            }
+
+            module.exports = myPlugin
+
+
+      section
         h2 The API
         p Let's build the next billion dollar startup, <strong>Moo</strong>!
         p Basically twitter, but with more characters.
@@ -108,9 +95,8 @@ html
 
       section
         h3 The API
-        p Build three different services, <code>login</code>, <code>moo</code> and <code>user</code>.
-        p Test the services!
-        pre.small
+        p The api will expose three different services, <code>login</code>, <code>moo</code> and <code>user</code>.
+        pre
           code.language-bash.
             /signup
             /moo/:id
@@ -119,17 +105,20 @@ html
 
       section
         h3 A little bit of configuration
+        p Being consistent across microservices is a difficult task, to help you Fastify provides a powerful CLI.
         pre
           code.language-bash.
-            npm install fastify-cli --global
-            mkdir fullstack-workshop
-            cd fullstack-workshop
+            npm install fastify-cli -g
+
+            mkdir moo-project
+            cd moo-project
+
             npm init -y
             fastify generate
 
       section
         h3 Project structure
-        ul.bullet
+        ul.bullet.left
           li <strong><code>plugins</code></strong>: the folder where you will store all your custom plugins
           li <strong><code>services</code></strong>: the folder where you will declare all your endpoints
           li <strong><code>test</code></strong>: the folder where you will declare all your test
@@ -137,45 +126,29 @@ html
 
       section
         h3 Scripts
-        ul.bullet
+        ul.bullet.left
           li <strong><code>npm start</code></strong>: run your server
           li <strong><code>npm run colada</code></strong>: run your server with pretty logs<br>(not suitable for production)
           li <strong><code>npm test</code></strong> run your test suite
 
       section
-        img(src='images/mongodb.png', style='width:50%; margin-bottom: 40px;')
-        ul.bullet
-          li Documental Database
-          li Schemaless and JSON-friendly
-          li There are no JOINs, you have to de-normalize!
-          li Optimized for fast developement!
+        h2 “Let's the hack begin”
 
       section
-        h3 MongoDB
-        p Let's configure our <code>docker-compose.yml</code>
-        pre.small
-          code.language-yml.
-            version: '2'
-            services:
-              mongo:
-                image: mongo:3.6
-                ports:
-                  - "27017:27017"
-        p Or run
+        h3 Clone the project
         pre.small
           code.language-bash.
-            docker run --rm -p 27017:27017 mongo:3.6
+            git clone https://github.com/delvedor/monoliths-always-pay-their-debts.git
+
+      section
+        img(src='images/mongodb.png', style='width:80%;')
 
       section
         h3 MongoDB
-        p Add the MongoDB driver to your server
         pre
           code.language-bash.
             npm install fastify-mongodb
 
-      section
-        h3 MongoDB
-        p Let's configure our server
         pre
           code.language-javascript.
             fastify.register(require('fastify-mongodb'), {
@@ -195,27 +168,13 @@ html
 
       section
         h2 Authentication
-        img(src='images/basic-auth-over-plain-http.jpg', style='width:60%; margin-top: 20px')
-
-      section
-        h3 Authentication
-        p Write a hook to authenticate the user request over Basic Auth
-        pre
+        img(src='images/basic-auth-over-plain-http.jpg', style='width:60%; margin-top: 20px; margin-bottom: 20px;')
+        pre.small
           code.language-bash.
             npm install fastify-basic-auth
 
       section
-        h3 Authentication
-        p Update the tests to support basic auth authentication
-        pre.small
-          code.language-javascript.
-            // use this function to generate the authentication header value
-            function basicAuth (username, password) {
-              return 'Basic ' + Buffer.from(`${username}:${password}`).toString('base64')
-            }
-
-      section
-        h2 Let's take a look to our monolith
+        h2 Let's take a look<br/>to our monolith
 
       section
         h3 Let's take a look to our monolith
@@ -229,17 +188,31 @@ html
         img(src='images/services-infra.png', style='width:100%; margin-top: 20px')
 
       section
+        h4 Awesome! Now update all your clients<br/>so they know which address to call<br/>based on the service they need to use.
+        img(src='images/clients.gif', style='width:70%; height: auto; margin-top: 20px')
+
+      section
+        h1.red WRONG!
+
+      section
+        h2.left The infrastructure<br/>should be transparent<br/>for the client.
+
+      section
+        h3 Solution
         h2 Gateway
 
       section
         h3 Gateway
-        <code>npm i fastify-http-proxy</code>
+        pre
+          code.language-bash.
+            npm install fastify-http-proxy
+
         pre
           code.language-javascript.
+            // don't forget to handle the authentication!
             fastify.register(require('fastify-http-proxy'), {
               upstream: 'http://localhost:3030',
-              prefix: '/post',
-              beforeHandler: fastify.basicAuth
+              prefix: '/post'
             })
 
       section
