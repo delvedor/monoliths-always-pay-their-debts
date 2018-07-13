@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Monoliths always pay their debts</title>
+    <link rel="stylesheet" type="text/css" href="build/build.css">
+  </head>
+  <body>
+    <article>
+      <section class="trans" data-bespoke-backdrop="intro" style="color: white">
+        <h2 class="uppercase left border-left" style="margin-left: -70%;">Monoliths<br/>always<br/>pay their<br/>debts</h2><br><br><br>
+        <p class="copyright">by Tomas Della Vedova<br><a href="http://twitter.com/delvedor" style="color:white">@delvedor</a></p>
+      </section>
+      <section><img src="images/delvedor.png" style="width:100%; border-radius: 5px;"></section>
+      <!-- section
+      // h3 Who are <span class="highlight">you</span>?
+      // i.fa.fa-microphone.fa-5x
+      
+      -->
+      <section>
+        <h2>Roadmap</h2>
+        <ul class="bullet">
+          <li>Monoliths vs Microservices</li>
+          <li>Fastify</li>
+          <li>Let's build our new startup!</li>
+        </ul>
+      </section>
+      <section>
+        <h3>Monoliths vs Microservices</h3><img src="images/monoliths-vs-microservices.png" style="width:100%; border-radius: 5px;">
+        <p class="copyright"><a href="https://medium.com/startlovingyourself/microservices-vs-monolithic-architecture-c8df91f16bb4" target="_blank" style="color: #fff">https://bit.ly/2mcmDmp</a></p>
+      </section>
+      <section class="trans" data-bespoke-backdrop="fastify-background" style="color: white"><img src="images/fastify-white-landscape.png" style="width:100%"></section>
+      <!-- section
+      // img(src='images/mcollina.png', style='width:100%; border-radius: 5px;')
+      
+      -->
+      <section>
+        <h3>Fastify</h3>
+        <p class="small">Fastify is a web framework highly focused on providing the best developer experience with the least overhead and a powerful plugin architecture.</p>
+        <pre><code class="language-javascript">const fastify = require('fastify')()
+
+fastify.get('/', async (request, reply) => {
+  return { hello: 'world' }
+})
+
+fastify.listen(3000)</code></pre><br><a class="highlight" href="https://www.fastify.io/">fastify.io</a>
+      </section>
+      <section><img src="images/benchmarks.png" style="width:90%"></section>
+      <section>
+        <h2>Fastify <span class="highlight">Plugins</span></h2>
+        <h3>A brief overiview</h3>
+      </section>
+      <section>
+        <h3><span class="highlight">Registering</span> plugins</h3>
+        <pre><code class="language-javascript">fastify.register(
+  require('./my-plugin'),
+  { options }
+)
+</code></pre>
+      </section>
+      <section>
+        <h3>Plugin <span class="highlight">Syntax</span></h3>
+        <pre><code class="language-javascript">async function myPlugin (fastify, options) {
+  // register other plugins
+  fastify.register(...)
+  // add hooks
+  fastify.addHook(...)
+  // add decorator
+  fastify.decorate(...)
+  // add routes
+  fastify.route(...)
+}
+module.exports = myPlugin
+</code></pre>
+      </section>
+      <section>
+        <h3>Plugins <span class="highlight">Architecture</span></h3><img src="images/dag.png" style="width:70%; margin-top: 20px">
+      </section>
+      <section>
+        <h3>Plugins: <span class="highlight">Encapsulation</span></h3><img src="images/dag-decorate.png" style="width:70%; margin-top: 20px">
+      </section>
+      <section>
+        <h3>Exposing functionality to <span class="highlight">parents</span></h3>
+        <pre><code class="language-javascript">const fp = require('fastify-plugin')
+
+async function myPlugin (fastify, options) {
+  fastify.decorate('util', yourAwesomeUtility)
+  // now you can use it with `fastify.util`
+}
+
+module.exports = fp(myPlugin)
+</code></pre>
+      </section>
+      <section>
+        <h3>Plugins: <span class="highlight">Encapsulation</span></h3><img src="images/dag-fp-encapsulate.png" style="width:70%; margin-top: 20px">
+      </section>
+      <section>
+        <h3>Plugins: <span class="highlight">Real world</span></h3><img src="images/plugin-real-world.png" style="width:70%; margin-top: 20px">
+      </section>
+      <section>
+        <h2><span class="highlight">Everything</span> is a plugin</h2>
+      </section>
+      <section>
+        <h2>Let's <span class="highlight">build</span> our new startup!</h2>
+        <ul class="bullet">
+          <li class="left">Let's build the next billion dollar startup, <strong class="highlight" style="font-size: 1.5em">Moo</strong>!</li>
+          <li class="left">Basically Twitter, but with more characters and cows.</li>
+          <li class="left">A user should be able to:</li>
+          <li>Signup!</li>
+          <li>Post a new <em>moo</em></li>
+          <li>Get a <em>moo</em> by id</li>
+          <li>Get all the <em>moos</em> of a user</li>
+        </ul>
+      </section>
+      <section>
+        <h3>Let's build our new startup!</h3>
+        <p>The API will expose three different services, <code class="highlight">login</code>, <code class="highlight">moo</code> and <code class="highlight">user</code>.</p>
+        <pre><code class="language-bash">/signup
+/moo/:id
+/moo/create
+/user/:username/moos
+</code></pre>
+      </section>
+      <section>
+        <h3>A little bit of configuration</h3>
+        <p>Being <span class="highlight">consistent</span> across microservices is a difficult task, to help you Fastify provides a powerful CLI.</p>
+        <pre><code class="language-bash">npm install fastify-cli -g
+
+mkdir moo-project
+cd moo-project
+
+npm init -y
+fastify generate
+</code></pre>
+      </section>
+      <section>
+        <h3>Project structure</h3>
+        <ul class="bullet left">
+          <li><strong class="highlight"><code>app.js</code></strong>: your entry point</li>
+          <li><strong class="highlight"><code>services</code></strong>: the folder where you will declare all your endpoints</li>
+          <li><strong class="highlight"><code>plugins</code></strong>: the folder where you will store all your custom plugins</li>
+          <li><strong class="highlight"><code>test</code></strong>: the folder where you will declare all your test</li>
+        </ul>
+      </section>
+      <section>
+        <h3>Scripts</h3>
+        <ul class="bullet left">
+          <li><strong class="highlight"><code>npm start</code></strong>: run your server</li>
+          <li><strong class="highlight"><code>npm run dev</code></strong>: run your server with pretty logs<br><em>(not suitable for production)</em></li>
+          <li><strong class="highlight"><code>npm run lint</code></strong>: run the default linter</li>
+          <li><strong class="highlight"><code>npm test</code></strong> run your test suite</li>
+        </ul>
+      </section>
+      <section class="trans" data-bespoke-backdrop="hack-begin" style="color: white">
+        <h2>“Let's the hack begin”</h2>
+      </section>
+      <section>
+        <h3>Download the project</h3>
+        <h2><code>https://git.io/</code><code class="highlight">fNtFL</code></h2>
+      </section>
+      <section><img src="images/mongodb.png" style="width:60%;"><code style="margin-top: 30px; font-size: 3em;">docker-compose up</code></section>
+      <section>
+        <h3>MongoDB</h3>
+        <pre><code class="language-bash">npm install fastify-mongodb
+</code></pre>
+        <pre><code class="language-javascript">fastify.register(require('fastify-mongodb'), {
+  url: 'mongodb://127.0.0.1:27017/moo'
+})</code></pre>
+        <pre><code class="language-bash">docker-compose up
+</code></pre>
+      </section>
+      <section>
+        <h2>Security</h2><img src="images/wonka-md5.jpg" style="width:40%; margin-top: 20px">
+      </section>
+      <section>
+        <h3>Security</h3>
+        <p>Use <code class="highlight">bcrypt</code> to store user passwords</p>
+        <pre><code class="language-bash">npm install bcrypt
+</code></pre>
+      </section>
+      <section>
+        <h2>Authentication</h2><img src="images/basic-auth-over-plain-http.jpg" style="width:60%; margin-top: 20px; margin-bottom: 20px;">
+        <pre class="small"><code class="language-bash">npm install fastify-basic-auth
+</code></pre>
+      </section>
+      <section>
+        <h2>Let's take a look<br/>at our <span class="highlight">monolith</span></h2>
+      </section>
+      <section>
+        <h3>Application architecture</h3><img src="images/monolith-infra.png" style="width:100%; margin-top: 20px">
+      </section>
+      <section>
+        <h2><span class="highlight">Testing</span> time</h2>
+        <h2><code>https://git.io/</code><code class="highlight">fNLAt</code></h2>
+      </section>
+      <section>
+        <h2>From monolith to <span class="highlight">microservices</span></h2>
+        <h2 style="margin-top:30px">Let's begin<span class="highlight">!</span></h2>
+      </section>
+      <section>
+        <h2>Plan of attack</h2>
+        <ol class="bullet left">
+          <li>Create a project with <code class="highlight">fastify-cli</code> and name it <code class="highlight">login</code></li>
+          <li>Copy the <code class="highlight">services/login.js</code> from the monolith's into the new login project's <code class="highlight">services</code> folder.</li>
+          <li>Do the same for <code class="highlight">services/post.js</code> and <code class="highlight">services/user.js</code></li>
+          <li>Copy the authentication logic from the monolith's <code class="highlight">app.js</code> file to the new post and user project's <code class="highlight">app.js</code> files</li>
+        </ol>
+      </section>
+      <section>
+        <h2>Test <span class="highlight">again</span> your infrastructure</h2>
+        <h2><code>https://git.io/</code><code class="highlight">fNLAt</code></h2>
+      </section>
+      <section>
+        <h3>From monolith to microservices</h3><img src="images/services-infra.png" style="width:100%; margin-top: 20px">
+      </section>
+      <section>
+        <h4>Awesome! Now update <span class="highlight">all your clients</span><br/>so they know which address to call<br/>based on the service they need to use.</h4><img src="images/clients.gif" style="width:70%; height: auto; margin-top: 20px">
+      </section>
+      <section>
+        <h1 class="highlight underline">WRONG!</h1>
+      </section>
+      <section>
+        <h2 class="left">The infrastructure<br/>should be <span class="highlight underline">transparent</span><br/>to the client.</h2>
+      </section>
+      <section>
+        <h3>Solution</h3>
+        <h2 class="highlight">Gateway</h2>
+      </section>
+      <section>
+        <!-- h3 Gateway--><img src="images/gateway-infra.png" style="width:100%;">
+      </section>
+      <section>
+        <h3>Gateway</h3>
+        <pre><code class="language-bash">npm install fastify-http-proxy
+</code></pre>
+        <pre><code class="language-javascript">fastify.register(require('fastify-http-proxy'), {
+  upstream: 'http://localhost:3030',
+  prefix: '/post'
+})
+</code></pre>
+      </section>
+      <section>
+        <h2><span class="highlight">Prefix</span> handiling</h2>
+        <ol class="bullet left">
+          <li>Remove the <code class="highlight">autoPrefix</code> line from the services</li>
+          <li>Let the gateway handle the prefixes with the <code class="highlight">prefix</code> option</li>
+        </ol>
+      </section>
+      <section>
+        <h2>docker-compose</h2>
+        <ol class="bullet left">
+          <li><code>docker-compose stop</code></li>
+          <li>Use <code class="highlight">docker-compose-v2.yml</code> to run your infrastructure</li>
+          <li>Update the links of the gateway with the logical names used inside the <code class="highlight">docker-compose</code> file</li>
+          <li><code>docker-compose up</code></li>
+        </ol>
+      </section>
+      <!-- section
+      // img(src='images/gateway-infra-docker.png', style='width:100%;')
+      
+      -->
+      <section>
+        <h3>Docker</h3>
+        <pre><code class="language-javascript">fastify.register(require('fastify-http-proxy'), {
+  // update the previous url with
+  // the logical name used inside docker
+  upstream: 'moo-post',
+  prefix: '/post'
+})
+</code></pre>
+      </section>
+      <section>
+        <h2>Let's talk about <span class="highlight">authentication</span></h2>
+        <ol class="bullet left">
+          <li>There is no need to duplicate the authentication logic across the microservices, you can <span class="highlight">delegate</span> to the gateway this responsability</li>
+          <li>Move the authentication logic from each service to the <span class="highlight">gateway</span></li>
+          <li>Remember that not all services require authentication</li>
+        </ol>
+      </section>
+      <section>
+        <!-- h3 Gateway--><img src="images/gateway-infra-auth.png" style="width:100%;">
+      </section>
+      <section>
+        <h2>Final <span class="highlight">test</span></h2>
+        <h2><code>https://git.io/</code><code class="highlight">fNLAt</code></h2>
+      </section>
+      <section>
+        <h2>Bonus</h2>
+        <h3>Update the authentication strategy<br/>and use <code class="highlight">JWT</code>.</h3>
+      </section>
+      <section class="trans" data-bespoke-backdrop="fastify-background" style="color: white"><img src="images/fastify-white-landscape.png" style="width:100%"></section>
+      <section class="trans" data-bespoke-backdrop="intro" style="color: white">
+        <h2 class="uppercase">Thanks!</h2><br><br><br>
+        <p class="copyright">by Tomas Della Vedova<br><a href="http://twitter.com/delvedor" style="color:white">@delvedor</a></p>
+      </section>
+    </article>
+    <script src="build/build.js"></script>
+    <script src="http://localhost:35729/livereload.js"></script>
+  </body>
+</html>
