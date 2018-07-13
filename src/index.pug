@@ -36,13 +36,14 @@ html
 
       section
         h3 Monoliths vs Microservices
-        <a href="https://medium.com/startlovingyourself/microservices-vs-monolithic-architecture-c8df91f16bb4" target="_blank"><img src="images/monoliths-vs-microservices.png" style="width:100%" /></a>
+        img(src='images/monoliths-vs-microservices.png', style='width:100%; border-radius: 5px;')
+        p.copyright <a href="https://medium.com/startlovingyourself/microservices-vs-monolithic-architecture-c8df91f16bb4" target="_blank" style="color: #fff">https://bit.ly/2mcmDmp</a>
 
       section(data-bespoke-backdrop='fastify-background', style='color: white').trans
         img(src='images/fastify-white-landscape.png', style='width:100%')
 
-      section
-        img(src='images/mcollina.png', style='width:100%; border-radius: 5px;')
+      // section
+        // img(src='images/mcollina.png', style='width:100%; border-radius: 5px;')
 
       section
         h3 Fastify
@@ -125,10 +126,10 @@ html
 
       section
         h2 Let's <span class="highlight">build</span> our new startup!
-        p Let's build the next billion dollar startup, <strong class="highlight">Moo</strong>!
-        p Basically Twitter, but with more characters and cows.
-        p A user should be able to:
         ul.bullet
+          li.left Let's build the next billion dollar startup, <strong class="highlight" style="font-size: 1.5em">Moo</strong>!
+          li.left Basically Twitter, but with more characters and cows.
+          li.left A user should be able to:
           li Signup!
           li Post a new <em>moo</em>
           li Get a <em>moo</em> by id
@@ -234,7 +235,7 @@ html
 
       section
         h2 Plan of attack
-        ol.left
+        ol.bullet.left
           li Create a project with <code class="highlight">fastify-cli</code> and name it <code class="highlight">login</code>
           li Copy the <code class="highlight">services/login.js</code> from the monolith's into the new login project's <code class="highlight">services</code> folder.
           li Do the same for <code class="highlight">services/post.js</code> and <code class="highlight">services/user.js</code>
@@ -281,13 +282,13 @@ html
 
       section
         h2 <span class="highlight">Prefix</span> handiling
-        ol.left
+        ol.bullet.left
           li Remove the <code class="highlight">autoPrefix</code> line from the services
           li Let the gateway handle the prefixes with the <code class="highlight">prefix</code> option
 
       section
         h2 docker-compose
-        ol.left
+        ol.bullet.left
           li <code>docker-compose stop</code>
           li Use <code class="highlight">docker-compose-v2.yml</code> to run your infrastructure
           li Update the links of the gateway with the logical names used inside the <code class="highlight">docker-compose</code> file
@@ -309,7 +310,7 @@ html
 
       section
         h2 Let's talk about <span class="highlight">authentication</span>
-        ol.left
+        ol.bullet.left
           li There is no need to duplicate the authentication logic across the microservices, you can <span class="highlight">delegate</span> to the gateway this responsability
           li Move the authentication logic from each service to the <span class="highlight">gateway</span>
           li Remember that not all services require authentication
