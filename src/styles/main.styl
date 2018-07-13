@@ -5,7 +5,14 @@
 
 slide_width = 640px
 slide_height = 480px
-slide_background = white
+slide_background = #282c32
+// slide_background = #282432
+// slide_text_color_primary = #404040
+// slide_text_color_primary = #282c32
+slide_text_color_primary = #fff
+// slide_text_color_secondary = #606060
+slide_text_color_secondary = #f7f7f7
+slide_text_highlight = #e61a7a
 
 slide_transition_length = .6s
 slide_transition_easing = ease
@@ -155,7 +162,9 @@ bullet_transition_translate_x = 16px
   transition: width .6s ease
   position: absolute
   height: 100%
-  background: #0089f3
+  background-color: slide_text_highlight
+  // background: #0089f3
+  background-color: slide_text_highlight
   border-radius: 0 4px 4px 0
 
 // bespoke-backdrop styles
@@ -183,7 +192,8 @@ pre
 body
   font-family: 'Open Sans Condensed', helvetica, sans-serif
   font-size: 18px
-  color: #404040
+  color: slide_text_color_primary
+  background-color: slide_background
 
 h1, h2, h3, h4, h5, h6
   font-family: 'Montserrat', helvetica, sans-serif
@@ -203,7 +213,7 @@ h3
   font-size: 24px
   font-weight: normal
   margin-bottom: 24px
-  color: #606060
+  color: slide_text_color_secondary
 
 hr
   visibility: hidden
@@ -266,6 +276,12 @@ button
 .red
   color: #F44336
 
+.highlight
+  color: slide_text_highlight
+
+.underline
+  text-decoration: underline
+
 .left
   text-align: left
 
@@ -301,5 +317,17 @@ table
   background-size: cover
 
 .fastify-background
-  background-image: url('../images/fastify-background.jpg')
+  background-image: url('../images/fastify-background.png')
   background-size: cover
+
+.hack-begin
+  background-image: url('../images/hack.png')
+  background-size: cover
+
+:not(pre)>code[class*=language-], pre[class*=language-]
+  background-color: slide_background
+
+:not(pre)>code[class*=language-]::-webkit-scrollbar,
+pre[class*=language-]::-webkit-scrollbar {
+  width: 0 !important
+}
