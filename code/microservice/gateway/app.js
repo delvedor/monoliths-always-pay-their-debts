@@ -13,7 +13,8 @@ module.exports = async function (fastify, opts) {
 
   // MongoDB connector
   fastify.register(require('fastify-mongodb'), {
-    url: `mongodb://${isDocker() ? 'mongo' : '127.0.0.1'}/moo`
+    url: `mongodb://${isDocker() ? 'mongo:27017' : '127.0.0.1:27017'}/moo`,
+    useNewUrlParser: true
   })
 
   // Basic authentication plugin

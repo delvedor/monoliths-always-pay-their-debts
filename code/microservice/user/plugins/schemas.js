@@ -53,7 +53,7 @@ module.exports = fp(async function (fastify, opts) {
     properties: {
       id: { type: 'string' },
       text: { type: 'string' },
-      time: { type: 'string' },
+      time: { type: 'number' },
       author: { type: 'string' }
     }
   })
@@ -65,11 +65,8 @@ module.exports = fp(async function (fastify, opts) {
       text: {
         type: 'string',
         maxLength: 1000
-      },
-      time: {
-        type: 'string'
       }
     },
-    required: ['text', 'time']
+    required: ['text']
   })
 })

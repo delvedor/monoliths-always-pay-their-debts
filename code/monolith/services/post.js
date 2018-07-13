@@ -49,8 +49,9 @@ module.exports = async function (fastify, opts) {
   })
 
   async function onCreate (req, reply) {
-    const { text, time } = req.body
+    const { text } = req.body
     const author = req.headers['x-username']
+    const time = Date.now()
 
     const id = hyperid()
     await postCol.insertOne({ author, id, text, time })
@@ -59,4 +60,6 @@ module.exports = async function (fastify, opts) {
   }
 }
 
+// autoload will automtically add this prefix to all the registered routes
+// if you want to avoid this, just remove the following line
 module.exports.autoPrefix = '/post'

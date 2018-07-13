@@ -8,7 +8,6 @@ test('Should be able to create a post', async t => {
   const fastify = await build(App)
   await createUser(fastify, 'delvedor', 'winteriscoming')
 
-  const time = new Date().toISOString()
   const response = await fastify.inject({
     method: 'POST',
     url: '/post/create',
@@ -16,8 +15,7 @@ test('Should be able to create a post', async t => {
       authorization: basicAuth('delvedor', 'winteriscoming')
     },
     payload: {
-      text: 'May the force be with you',
-      time
+      text: 'May the force be with you'
     }
   })
 
@@ -29,8 +27,9 @@ test('Should be able to create a post', async t => {
     .findOne({ id: payload.id }, { _id: 0 })
 
   delete post._id
+  t.is(typeof post.time, 'number')
+  delete post.time
   t.deepEqual(post, {
-    time,
     text: 'May the force be with you',
     author: 'delvedor',
     id: payload.id
@@ -68,8 +67,10 @@ test('Get a post by id', async t => {
   })
 
   t.strictEqual(response.statusCode, 200)
-  t.deepEqual(JSON.parse(response.payload), {
-    time,
+  const payload = JSON.parse(response.payload)
+  t.is(typeof payload.time, 'number')
+  delete payload.time
+  t.deepEqual(payload, {
     id,
     text: 'May the force be with you',
     author: 'delvedor'
@@ -93,7 +94,7 @@ test('Get a post by id (404)', async t => {
   t.strictEqual(response.statusCode, 404)
   t.deepEqual(JSON.parse(response.payload), {
     error: 'Not Found',
-    message: 'The post with id \'abcd\' does not exists',
+    message: 'Not Found',
     statusCode: 404
   })
 

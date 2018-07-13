@@ -1,10 +1,9 @@
 'use strict'
 
-const bcrypt = require('bcrypt')
 const saltRounds = 10
 
 module.exports = async function (fastify, opts) {
-  const { assert, mongo } = fastify
+  const { assert, mongo, bcrypt } = fastify
   const usersCol = mongo.db.collection('users')
 
   fastify.route({
@@ -27,6 +26,10 @@ module.exports = async function (fastify, opts) {
     await usersCol.insertOne({ username, password: hashedPassword })
 
     reply.code(201)
-    return { status: 'ok' }
+    return { status: 'ok', token: basicAuth(username, password) }
+  }
+
+  function basicAuth (username, password) {
+    return 'Basic ' + Buffer.from(`${username}:${password}`).toString('base64')
   }
 }

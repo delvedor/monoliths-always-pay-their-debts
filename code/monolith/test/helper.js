@@ -13,7 +13,8 @@ async function build (plugin) {
     .register(plugin)
     // register the databse connector so we can use it inside the test
     .register(require('fastify-mongodb'), {
-      url: 'mongodb://127.0.0.1/moo'
+      url: 'mongodb://127.0.0.1:27017/moo',
+      useNewUrlParser: true
     })
     // clean the database before run the test
     .after((err, instance, done) => {

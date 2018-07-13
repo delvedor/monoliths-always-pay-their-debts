@@ -56,5 +56,3 @@ module.exports = async function (fastify, opts) {
     return { id }
   }
 }
-
-module.exports.autoPrefix = '/post'

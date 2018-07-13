@@ -25,5 +25,3 @@ module.exports = async function (fastify, opts) {
       .toArray()
   }
 }
-
-module.exports.autoPrefix = '/user'

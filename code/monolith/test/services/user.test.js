@@ -8,7 +8,6 @@ test('Get the post created by a user', async t => {
   const fastify = await build(App)
   await createUser(fastify, 'delvedor', 'winteriscoming')
 
-  const time = new Date().toISOString()
   var response = await fastify.inject({
     method: 'POST',
     url: '/post/create',
@@ -16,8 +15,7 @@ test('Get the post created by a user', async t => {
       authorization: basicAuth('delvedor', 'winteriscoming')
     },
     payload: {
-      text: 'May the force be with you',
-      time
+      text: 'May the force be with you'
     }
   })
 
@@ -34,8 +32,10 @@ test('Get the post created by a user', async t => {
   })
 
   t.strictEqual(response.statusCode, 200)
-  t.deepEqual(JSON.parse(response.payload), [{
-    time,
+  const payload = JSON.parse(response.payload)
+  t.is(typeof payload[0].time, 'number')
+  delete payload[0].time
+  t.deepEqual(payload, [{
     id,
     text: 'May the force be with you',
     author: 'delvedor'

@@ -9,7 +9,7 @@ module.exports = async function (fastify, opts) {
 
   fastify.route({
     method: 'POST',
-    url: '/signup',
+    url: '/',
     schema: {
       description: 'Endpoint to register a new user',
       body: 'user-login#'
@@ -27,6 +27,10 @@ module.exports = async function (fastify, opts) {
     await usersCol.insertOne({ username, password: hashedPassword })
 
     reply.code(201)
-    return { status: 'ok' }
+    return { status: 'ok', token: basicAuth(username, password) }
+  }
+
+  function basicAuth (username, password) {
+    return 'Basic ' + Buffer.from(`${username}:${password}`).toString('base64')
   }
 }

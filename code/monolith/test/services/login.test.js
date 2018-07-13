@@ -1,7 +1,7 @@
 'use strict'
 
 const { test } = require('tap')
-const { build, close, createUser } = require('../helper')
+const { build, close, createUser, basicAuth } = require('../helper')
 const bcrypt = require('bcrypt')
 const App = require('../../app')
 
@@ -17,7 +17,10 @@ test('Should create a new user', async t => {
   })
 
   t.strictEqual(response.statusCode, 201)
-  t.deepEqual(JSON.parse(response.payload), { status: 'ok' })
+  t.deepEqual(
+    JSON.parse(response.payload),
+    { status: 'ok', token: basicAuth('delvedor', 'winteriscoming') }
+  )
 
   const user = await fastify.mongo.db.collection('users')
     .findOne({ username: 'delvedor' })
