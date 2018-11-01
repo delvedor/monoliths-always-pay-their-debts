@@ -191,7 +191,8 @@ em {
 }
 
 .light div.boxed-em em {
-  color: #282c32;
+  /* color: #282c32; */
+  color: #f9f9f9;
   background-color: #e61a7a;
 }
 
