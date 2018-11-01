@@ -232,7 +232,7 @@ class small
 -->
 
 # A little bit of configuration
-Being *consistent* across microservices is a difficult task, to *help you* Fastify provides a powerful CLI.
+Being *consistent* across microservices is a difficult task,<br/>to *help you* Fastify provides a powerful CLI.
 
 ```bash
 npm install fastify-cli -g
@@ -250,10 +250,10 @@ class small
 -->
 
 # Project structure
-- *app.js*: your entry point
-- *services*: the folder where you will declare all your endpoints
-- *plugins*: the folder where you will store all your custom plugins
-- *test*: the folder where you will declare all your test
+- *app.js*: your entry point;
+- *services*: the folder where you will declare all your endpoints;
+- *plugins*: the folder where you will store all your custom plugins;
+- *test*: the folder where you will declare all your test.
 
 ---
 <!--
@@ -261,11 +261,10 @@ class small
 -->
 
 # Scripts
-- *`npm start`*: run your server
+- *`npm start`*: run your server;
 - *`npm run dev`*: run your server with pretty logs
-(not suitable for production)
-- *`npm run lint`*: run the default linter
-- *`npm test`*: run your test suite
+(not suitable for production);
+- *`npm test`*: run your test suite.
 
 ---
 <!--
@@ -327,6 +326,9 @@ class small
 # The infrastructure<br/>should be *transparent*<br/>to the client.
 
 ---
+<!--
+class small
+-->
 
 # Gateway
 
