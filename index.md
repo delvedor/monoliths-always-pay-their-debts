@@ -24,23 +24,39 @@ class small
 ![elastic-logo-light](images/elastic-logo-light.png)
 
 ---
-<!--
-class colored-li small
--->
 
-# Roadmap*.*
-- Monoliths vs Microservices
-- Fastify
-- Let's build our new startup!
+# Let's *build* our new startup*!*
 
 ---
 <!--
-class center
+class small colored-li
 -->
 
-# Monoliths vs Microservices
-![monoliths-vs-microservices](images/monoliths-vs-microservices.png)
+# Let's *build* our new startup!
+Let's build the next billion dollar startup, *Moo*!
 
+Basically Twitter, but with more characters and *cows*.
+
+A user should be able to:
+- Signup!
+- Post a new post
+- Get a post by id
+- Get all the posts of a user
+
+---
+<!--
+class small
+-->
+
+### Let's *build* our new startup!
+The API will expose three different services, *login*, *post* and *user*.
+
+```txt
+/signup
+/post/:id
+/post/create
+/user/:username/posts
+```
 ---
 <!--
 bodyclass fastify-background
@@ -50,7 +66,6 @@ class copyright-right
 ![fastify-logo](images/fastify-white-landscape.png)
 
 [fastify.io](http://fastify.io/)
-
 
 ---
 <!--
@@ -76,6 +91,78 @@ class center benchmarks-image
 
 ![benchmarks](images/benchmarks.png)
 
+
+---
+<!--
+class small code-line-height
+-->
+
+# A little bit of configuration
+Being *consistent* across microservices is a difficult task,<br/>to *help you* Fastify provides a powerful CLI.
+
+```bash
+npm install fastify-cli -g
+fastify generate moo-project
+cd moo-project
+npm install
+```
+
+---
+<!--
+class small
+-->
+
+# Project structure
+- *app.js*: your entry point;
+- *services*: the folder where you will declare all your endpoints;
+- *plugins*: the folder where you will store all your custom plugins;
+- *test*: the folder where you will declare all your test.
+
+---
+<!--
+class small
+-->
+
+# Scripts
+- *`npm start`*: run your server;
+- *`npm run dev`*: run your server with pretty logs
+(not suitable for production);
+- *`npm test`*: run your test suite.
+
+---
+<!--
+bodyclass hack-background
+class white-text nobreak
+-->
+
+# “Let's the hack begin”
+
+---
+<!--
+class small
+-->
+
+# Let's take a look at our *monolith*
+
+---
+<!--
+class demo center
+-->
+
+# DEMO
+
+---
+
+![monolith](images/monolith-infra.png)
+
+---
+<!--
+class center
+-->
+
+# Monolith vs Microservices
+![monoliths-vs-microservices](images/monoliths-vs-microservices.png)
+
 ---
 <!--
 class nobreak
@@ -83,8 +170,6 @@ class nobreak
 
 # Fastify *Plugins*
 A brief overview
-
----
 
 ---
 
@@ -196,96 +281,6 @@ class boxed-em
 # *Everything* is a plugin
 
 ---
-<!--
-class small colored-li
--->
-
-# Let's *build* our new startup!
-Let's build the next billion dollar startup, *Moo*!
-
-Basically Twitter, but with more characters and *cows*.
-
-A user should be able to:
-- Signup!
-- Post a new moo
-- Get a moo by id
-- Get all the moos of a user
-
----
-<!--
-class small
--->
-
-### Let's *build* our new startup!
-The API will expose three different services, *login*, *moo* and *user*.
-
-```txt
-/signup
-/moo/:id
-/moo/create
-/user/:username/moos
-```
-
----
-<!--
-class small
--->
-
-# A little bit of configuration
-Being *consistent* across microservices is a difficult task,<br/>to *help you* Fastify provides a powerful CLI.
-
-```bash
-npm install fastify-cli -g
-
-mkdir moo-project
-cd moo-project
-
-npm init -y
-fastify generate
-```
-
----
-<!--
-class small
--->
-
-# Project structure
-- *app.js*: your entry point;
-- *services*: the folder where you will declare all your endpoints;
-- *plugins*: the folder where you will store all your custom plugins;
-- *test*: the folder where you will declare all your test.
-
----
-<!--
-class small
--->
-
-# Scripts
-- *`npm start`*: run your server;
-- *`npm run dev`*: run your server with pretty logs
-(not suitable for production);
-- *`npm test`*: run your test suite.
-
----
-<!--
-bodyclass hack-background
-class white-text nobreak
--->
-
-# “Let's the hack begin”
-
----
-<!--
-class small
--->
-
-# Let's take a look at our *monolith*
-
----
-
-![monolith](images/monolith-infra.png)
-
----
 
 # From monolith to *microservices*
 ### Let's begin*!*
@@ -327,17 +322,17 @@ class small
 
 ---
 <!--
-class small
+class small nobreak
 -->
 
-# Gateway
+How can we *fix* this*?*
 
 ---
 <!--
-class gateway-image center
+class small
 -->
 
-![gateway](images/gateway-infra.png)
+# Gateway*.*
 
 ---
 
@@ -361,19 +356,20 @@ class demo center
 
 ---
 <!--
-class small
+class gateway-image center
 -->
 
-# Let's talk about *authentication*
-
-There is *no need to duplicate* the authentication logic across the microservices, you can delegate to the gateway this *responsability*.
+![gateway](images/gateway-infra.png)
 
 ---
 <!--
-class demo center
+bodyclass fastify-background
+class copyright-right
 -->
 
-# DEMO
+![fastify-logo](images/fastify-white-landscape.png)
+
+[fastify.io](http://fastify.io/)
 
 ---
 <!--

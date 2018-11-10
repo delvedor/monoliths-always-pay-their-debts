@@ -405,3 +405,11 @@ div.slide.demo {
   width: 55%;
   padding-top: 20px;
 }
+
+div.slide.basic-auth p img {
+  margin-top: 50px;
+}
+
+div.slide.code-line-height code {
+  line-height: 180%;
+}
