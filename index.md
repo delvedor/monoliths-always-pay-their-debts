@@ -39,7 +39,7 @@ Basically Twitter, but with more characters and *cows*.
 
 A user should be able to:
 - Signup!
-- Post a new post
+- Post a new moo
 - Get a post by id
 - Get all the posts of a user
 
@@ -101,8 +101,7 @@ class small code-line-height
 Being *consistent* across microservices is a difficult task,<br/>to *help you* Fastify provides a powerful CLI.
 
 ```bash
-npm install fastify-cli -g
-fastify generate moo-project
+npx fastify generate moo-project
 cd moo-project
 npm install
 ```
@@ -149,7 +148,7 @@ class small
 class demo center
 -->
 
-# DEMO
+<span style="color: #757575; font-style: italic;">// demo</span>
 
 ---
 
@@ -290,7 +289,7 @@ class boxed-em
 class demo center
 -->
 
-# DEMO
+<span style="color: #757575; font-style: italic;">// demo</span>
 
 ---
 
@@ -352,7 +351,7 @@ fastify.register(require('fastify-http-proxy'), {
 class demo center
 -->
 
-# DEMO
+<span style="color: #757575; font-style: italic;">// demo</span>
 
 ---
 <!--
@@ -373,8 +372,8 @@ class copyright-right
 
 ---
 <!--
-bodyclass intro-background
-class copyright-right small
+bodyclass fastify-background
+class copyright-right small white-text
 -->
 
 # Thanks!
