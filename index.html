@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='utf-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
+  <title>Diapo</title>
+  <link href='diapo.css' rel='stylesheet' type='text/css' />
+  <style>
+    .new-shiny { background: #aaaaaa; }
+  </style>
+  <script src='diapo.js'></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body class='light'>
+  <section id="diapo-progress-bar-container">
+    <div id="diapo-progress-bar"></div>
+  </section>
+  <div data-bodyclass="intro-background" class="border-left copyright-right intro-title"><!--
+bodyclass intro-background
+class border-left copyright-right intro-title
+-->
+
+<h1 id="monoliths-br-always-br-pay-their-br-debts">MONOLITHS<br/>ALWAYS<br/>PAY THEIR<br/>DEBTS</h1>
+<p><a href="https://twitter.com/delvedor">@delvedor</a></p>
+</div>
+<div  class="center center-image copyright-right"><!--
+class center center-image copyright-right
+-->
+
+<p><img src="images/delvedor.png" alt="delvedor"></p>
+<p><a href="https://twitter.com/delvedor">@delvedor</a></p>
+</div>
+<div  class="small"><!--
+class small
+-->
+
+<p><img src="images/elastic-logo-light.png" alt="elastic-logo-light"></p>
+</div>
+<div><h1 id="let-s-build-our-new-startup-">Let&#39;s <em>build</em> our new startup<em>!</em></h1>
+</div>
+<div  class="small colored-li"><!--
+class small colored-li
+-->
+
+<h1 id="let-s-build-our-new-startup-">Let&#39;s <em>build</em> our new startup!</h1>
+<p>Let&#39;s build the next billion dollar startup, <em>Moo</em>!</p>
+<p>Basically Twitter, but with more characters and <em>cows</em>.</p>
+<p>A user should be able to:</p>
+<ul>
+<li>Signup!</li>
+<li>Post a new moo</li>
+<li>Get a post by id</li>
+<li>Search a post</li>
+<li>Get all the posts of a user</li>
+</ul>
+</div>
+<div  class="small"><!--
+class small
+-->
+
+<h3 id="let-s-build-our-new-startup-">Let&#39;s <em>build</em> our new startup!</h3>
+<p>The API will expose three different services, <em>login</em>, <em>post</em> and <em>user</em>.</p>
+<pre><code class="language-txt">/signup
+/post/:id
+/post?search=${text}
+/post/create
+/user/:username/posts</code></pre>
+</div>
+<div data-bodyclass="fastify-background" class="copyright-right"><!--
+bodyclass fastify-background
+class copyright-right
+-->
+
+<p><img src="images/fastify-white-landscape.png" alt="fastify-logo"></p>
+<p><a href="http://fastify.io/">fastify.io</a></p>
+</div>
+<div  class="copyright-right"><!--
+class copyright-right
+-->
+
+<pre><code class="language-js">const fastify = require(&#39;fastify&#39;)()
+
+fastify.get(&#39;/&#39;, async (request, reply) =&gt; {
+  return { hello: &#39;world&#39; }
+})
+
+fastify.listen(3000)</code></pre>
+<p><a href="http://fastify.io/">fastify.io</a></p>
+</div>
+<div  class="center benchmarks-image"><!--
+class center benchmarks-image
+-->
+
+<p><img src="images/benchmarks.png" alt="benchmarks"></p>
+</div>
+<div  class="small code-line-height"><!--
+class small code-line-height
+-->
+
+<h1 id="a-little-bit-of-configuration">A little bit of configuration</h1>
+<p>Being <em>consistent</em> across microservices is a difficult task,<br/>to <em>help you</em> Fastify provides a powerful CLI.</p>
+<pre><code class="language-bash">npx fastify generate moo-project
+cd moo-project
+npm install</code></pre>
+</div>
+<div  class="small"><!--
+class small
+-->
+
+<h1 id="project-structure">Project structure</h1>
+<ul>
+<li><em>app.js</em>: your entry point;</li>
+<li><em>services</em>: the folder where you will declare all your endpoints;</li>
+<li><em>plugins</em>: the folder where you will store all your custom plugins;</li>
+<li><em>test</em>: the folder where you will declare all your test.</li>
+</ul>
+</div>
+<div  class="small"><!--
+class small
+-->
+
+<h1 id="scripts">Scripts</h1>
+<ul>
+<li><em><code>npm start</code></em>: run your server;</li>
+<li><em><code>npm run dev</code></em>: run your server with pretty logs
+(not suitable for production);</li>
+<li><em><code>npm test</code></em>: run your test suite.</li>
+</ul>
+</div>
+<div data-bodyclass="hack-background" class="white-text nobreak"><!--
+bodyclass hack-background
+class white-text nobreak
+-->
+
+<h1 id="-let-s-the-hack-begin-">“Let&#39;s the hack begin”</h1>
+</div>
+<div  class="small"><!--
+class small
+-->
+
+<h1 id="let-s-take-a-look-at-our-monolith">Let&#39;s take a look at our <em>monolith</em></h1>
+</div>
+<div  class="demo center"><!--
+class demo center
+-->
+
+<p><span style="color: #757575; font-style: italic;">// demo</span></p>
+</div>
+<div><p><img src="images/monolith-infra.png" alt="monolith"></p>
+</div>
+<div  class="center"><!--
+class center
+-->
+
+<h1 id="monolith-vs-microservices">Monolith vs Microservices</h1>
+<p><img src="images/monoliths-vs-microservices.png" alt="monoliths-vs-microservices"></p>
+</div>
+<div  class="nobreak"><!--
+class nobreak
+-->
+
+<h1 id="fastify-plugins">Fastify <em>Plugins</em></h1>
+<p>A brief overview</p>
+</div>
+<div><pre><code class="language-js">fastify.register(
+  require(&#39;my-plugin&#39;),
+  { options }
+)</code></pre>
+</div>
+<div  class="row async-plugin"><!--
+class row async-plugin
+-->
+
+<pre><code class="language-js">function myPlugin (fastify, opts, next) {
+  // register other plugins
+  fastify.register(...)
+
+  // add hooks
+  fastify.addHook(...)
+
+  // add decorator
+  fastify.decorate(...)
+
+  // add routes
+  fastify.route(...)
+
+  next()
+}
+
+module.exports = myPlugin</code></pre>
+<h3 id="async-await-br-is-supported-as-well-"><em>async await</em><br/>is supported as well!</h3>
+</div>
+<div  class="center small-image"><!--
+class center small-image
+-->
+
+<h1 id="plugins-architecture">Plugins: <em>Architecture</em></h1>
+<p><img src="images/dag.png" alt="dag"></p>
+</div>
+<div  class="center small-image"><!--
+class center small-image
+-->
+
+<h1 id="plugins-encapsulation">Plugins: <em>Encapsulation</em></h1>
+<p><img src="images/dag-decorate.png" alt="dag-decorate"></p>
+</div>
+<div><h3 id="exposing-functionality-to-parents">Exposing functionality to <em>parents</em></h3>
+<pre><code class="language-js">const fp = require(&#39;fastify-plugin&#39;)
+
+async function myPlugin (fastify, options) {
+  fastify.decorate(&#39;util&#39;, yourAwesomeUtility)
+  // now you can use it with `fastify.util`
+}
+
+module.exports = fp(myPlugin)</code></pre>
+</div>
+<div  class="center small-image"><!--
+class center small-image
+-->
+
+<h1 id="plugins-encapsulation">Plugins: <em>Encapsulation</em></h1>
+<p><img src="images/dag-fp-encapsulate.png" alt="dag-fp-encapsulate"></p>
+</div>
+<div  class="center small-image"><!--
+class center small-image
+-->
+
+<h1 id="plugins-real-world">Plugins: Real world</h1>
+<p><img src="images/plugin-real-world.png" alt="plugin-real-world"></p>
+</div>
+<div><h3 id="encapsulation-enables-many-great-things"><em>Encapsulation</em> enables many great things</h3>
+<h3 id="such-as-custom-log-level-per-plugin">such as custom <code>log-level</code> per plugin</h3>
+<br/>
+
+<pre><code class="language-js">const fastify = require(&#39;fastify&#39;)()
+
+fastify.register(require(&#39;./api/v1&#39;), {
+  prefix: &#39;/v1&#39;,
+  logLevel: &#39;error&#39;
+})
+
+fastify.register(require(&#39;./api/v2&#39;), {
+  prefix: &#39;/v2&#39;,
+  logLevel: &#39;debug&#39;
+})</code></pre>
+</div>
+<div  class="boxed-em"><!--
+class boxed-em
+-->
+
+<h1 id="everything-is-a-plugin"><em>Everything</em> is a plugin</h1>
+</div>
+<div><h1 id="from-monolith-to-microservices">From monolith to <em>microservices</em></h1>
+<h3 id="let-s-begin-">Let&#39;s begin<em>!</em></h3>
+</div>
+<div  class="demo center"><!--
+class demo center
+-->
+
+<p><span style="color: #757575; font-style: italic;">// demo</span></p>
+</div>
+<div><p><img src="images/services-infra.png" alt="monolith"></p>
+</div>
+<div  class="clients center"><!--
+class clients center
+-->
+
+<h1 id="awesome-">Awesome!</h1>
+<p>Now update <em>all your clients</em> so they know which address to call based on the service they need to use.</p>
+<p><img src="images/clients.gif" alt="clients"></p>
+</div>
+<div  class="boxed-em"><!--
+class boxed-em
+-->
+
+<h1 id="wrong-"><em>WRONG!</em></h1>
+</div>
+<div  class="small"><!--
+class small
+-->
+
+<h1 id="the-infrastructure-br-should-be-transparent-br-to-the-client-">The infrastructure<br/>should be <em>transparent</em><br/>to the client.</h1>
+</div>
+<div  class="small nobreak"><!--
+class small nobreak
+-->
+
+<p>How can we <em>fix</em> this<em>?</em></p>
+</div>
+<div  class="small"><!--
+class small
+-->
+
+<h1 id="gateway-">Gateway<em>.</em></h1>
+</div>
+<div><pre><code class="language-bash">npm install fastify-http-proxy</code></pre>
+<pre><code class="language-js">fastify.register(require(&#39;fastify-http-proxy&#39;), {
+  upstream: &#39;http://localhost:3030&#39;,
+  prefix: &#39;/post&#39;
+})</code></pre>
+</div>
+<div  class="demo center"><!--
+class demo center
+-->
+
+<p><span style="color: #757575; font-style: italic;">// demo</span></p>
+</div>
+<div  class="gateway-image center"><!--
+class gateway-image center
+-->
+
+<p><img src="images/gateway-infra.png" alt="gateway"></p>
+</div>
+<div data-bodyclass="fastify-background" class="copyright-right"><!--
+bodyclass fastify-background
+class copyright-right
+-->
+
+<p><img src="images/fastify-white-landscape.png" alt="fastify-logo"></p>
+<p><a href="http://fastify.io/">fastify.io</a></p>
+</div>
+<div  class="small nobreak colored-li"><!--
+class small nobreak colored-li
+-->
+
+<ul>
+<li>Presentation:<br/>
+<a href="https://fastify.rocks/monoliths-talk">https://fastify.rocks/monoliths-talk</a>
+<br/><br/></li>
+<li>Code:<br/>
+<a href="https://fastify.rocks/monoliths-code">https://fastify.rocks/monoliths-code</a></li>
+</ul>
+</div>
+<div data-bodyclass="intro-background" class="copyright-right small"><!--
+bodyclass intro-background
+class copyright-right small
+-->
+
+<h1 id="thanks-">Thanks!</h1>
+<p><a href="https://twitter.com/delvedor">@delvedor</a></p>
+</div>
+</body>
+</html>
