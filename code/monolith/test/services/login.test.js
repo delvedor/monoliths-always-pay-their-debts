@@ -3,10 +3,9 @@
 const { test } = require('tap')
 const { build, close, createUser, basicAuth } = require('../helper')
 const bcrypt = require('bcrypt')
-const App = require('../../app')
 
 test('Should create a new user', async t => {
-  const fastify = await build(App)
+  const fastify = await build()
   const response = await fastify.inject({
     method: 'POST',
     url: '/signup',
@@ -22,8 +21,15 @@ test('Should create a new user', async t => {
     { status: 'ok', token: basicAuth('delvedor', 'winteriscoming') }
   )
 
-  const user = await fastify.mongo.db.collection('users')
-    .findOne({ username: 'delvedor' })
+  const result = await fastify.elasticsearch.search({
+    index: 'users',
+    size: 1,
+    ignore: [404],
+    body: {
+      query: { term: { 'username.keyword': 'delvedor' } }
+    }
+  })
+  const user = result.hits.hits[0]._source
 
   t.ok(user !== null)
   t.is(typeof user.username, 'string')
@@ -34,7 +40,7 @@ test('Should create a new user', async t => {
 })
 
 test('If a user already exists, should return a 400', async t => {
-  const fastify = await build(App)
+  const fastify = await build()
   await createUser(fastify, 'delvedor', 'winteriscoming')
 
   const response = await fastify.inject({
@@ -57,7 +63,7 @@ test('If a user already exists, should return a 400', async t => {
 })
 
 test('Should return a 400 on bad parameters', async t => {
-  const fastify = await build(App)
+  const fastify = await build()
   var response = await fastify.inject({
     method: 'POST',
     url: '/signup',

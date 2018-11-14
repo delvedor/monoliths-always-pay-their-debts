@@ -1,11 +1,13 @@
 'use strict'
 
 module.exports = async function (fastify, opts) {
-  const postCol = fastify.mongo.db.collection('post')
+  const { elasticsearch } = fastify
+
+  fastify.addHook('preHandler', fastify.basicAuth)
 
   fastify.route({
     method: 'GET',
-    url: '/:username/post',
+    url: '/user/:username/post',
     schema: {
       description: 'Get post created by the user',
       params: 'username#',
@@ -20,8 +22,14 @@ module.exports = async function (fastify, opts) {
   })
 
   async function onGetPost (req, reply) {
-    return postCol
-      .find({ author: req.params.username })
-      .toArray()
+    const { username } = req.params
+    const result = await elasticsearch.search({
+      index: 'moos',
+      body: {
+        query: { term: { 'author.keyword': username } }
+      }
+    })
+
+    return result.hits.hits.map(h => h._source)
   }
 }

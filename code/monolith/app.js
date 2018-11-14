@@ -10,10 +10,10 @@ module.exports = async function (fastify, opts) {
   // Adds some useful utilities to Fastify
   fastify.register(require('fastify-sensible'))
 
-  // MongoDB connector
-  fastify.register(require('fastify-mongodb'), {
-    url: 'mongodb://127.0.0.1:27017/moo',
-    useNewUrlParser: true
+  // Elasticsearch connector
+  fastify.register(require('fastify-elasticsearch'), {
+    host: 'http://localhost:9200',
+    apiVersion: '6.4'
   })
 
   fastify.decorate('bcrypt', bcrypt)
@@ -21,11 +21,17 @@ module.exports = async function (fastify, opts) {
   fastify.register(require('fastify-basic-auth'), { validate })
   async function validate (username, password, req, reply) {
     // search the username inside the database
-    const user = await this.mongo.db
-      .collection('users')
-      .findOne({ username })
+    const result = await this.elasticsearch.search({
+      index: 'users',
+      size: 1,
+      ignore: [404],
+      body: {
+        query: { term: { 'username.keyword': username } }
+      }
+    })
 
-    fastify.assert(user !== null, 401)
+    fastify.assert(result.hits !== null && result.hits.total > 0, 401)
+    const user = result.hits.hits[0]._source
 
     // get the hashed password
     const hashedPassword = user.password

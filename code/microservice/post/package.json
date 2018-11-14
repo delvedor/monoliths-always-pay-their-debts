@@ -8,25 +8,27 @@
     "test": "standard && tap test/*.test.js test/*/*.test.js test/*/*/*.test.js",
     "start": "fastify start app.js",
     "dev": "fastify start -l info -P app.js",
+    "docker": "./wait-cluster.sh && npm run dev",
     "lint": "standard --fix"
   },
   "keywords": [],
   "author": "Tomas Della Vedova - @delvedor (http://delved.org)",
   "license": "ISC",
   "dependencies": {
-    "fastify": "^1.8.0",
-    "fastify-autoload": "^0.4.0",
-    "fastify-cli": "^0.16.3",
-    "fastify-mongodb": "^0.7.1",
-    "fastify-plugin": "^1.2.0",
+    "bcrypt": "^3.0.2",
+    "fastify": "^1.13.0",
+    "fastify-autoload": "^0.5.1",
+    "fastify-basic-auth": "^0.2.0",
+    "fastify-cli": "^0.25.2",
+    "fastify-elasticsearch": "^0.4.0",
+    "fastify-plugin": "^1.2.1",
     "fastify-sensible": "^0.2.0",
     "hyperid": "^1.4.1",
     "is-docker": "^1.1.0",
-    "make-promises-safe": "^1.1.0"
+    "make-promises-safe": "^3.0.0"
   },
   "devDependencies": {
-    "mongo-clean": "^2.0.0",
-    "standard": "^11.0.1",
+    "standard": "^12.0.1",
     "tap": "^12.0.1"
   }
 }

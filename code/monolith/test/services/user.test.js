@@ -1,11 +1,10 @@
 'use strict'
 
 const { test } = require('tap')
-const { build, close, createUser, basicAuth } = require('../helper')
-const App = require('../../app')
+const { build, close, createUser, basicAuth, sleep } = require('../helper')
 
 test('Get the post created by a user', async t => {
-  const fastify = await build(App)
+  const fastify = await build()
   await createUser(fastify, 'delvedor', 'winteriscoming')
 
   var response = await fastify.inject({
@@ -22,6 +21,9 @@ test('Get the post created by a user', async t => {
   t.strictEqual(response.statusCode, 201)
   const { id } = JSON.parse(response.payload)
   t.is(typeof id, 'string')
+
+  // index refresh in ES
+  await sleep(1000)
 
   response = await fastify.inject({
     method: 'GET',
@@ -45,7 +47,7 @@ test('Get the post created by a user', async t => {
 })
 
 test('Get the post created by a user (multiple post)', async t => {
-  const fastify = await build(App)
+  const fastify = await build()
   await createUser(fastify, 'delvedor', 'winteriscoming')
 
   var response = await fastify.inject({
@@ -73,6 +75,9 @@ test('Get the post created by a user (multiple post)', async t => {
     }
   })
   t.strictEqual(response.statusCode, 201)
+
+  // index refresh in ES
+  await sleep(1000)
 
   response = await fastify.inject({
     method: 'GET',

@@ -3,13 +3,14 @@
 const Hyperid = require('hyperid')
 
 module.exports = async function (fastify, opts) {
-  const { assert, mongo } = fastify
-  const postCol = mongo.db.collection('post')
+  const { elasticsearch } = fastify
   const hyperid = Hyperid({ urlSafe: true })
+
+  fastify.addHook('preHandler', fastify.basicAuth)
 
   fastify.route({
     method: 'GET',
-    url: '/:id',
+    url: '/post/:id',
     schema: {
       description: 'Get a post by its id',
       params: 'post-id#',
@@ -23,15 +24,48 @@ module.exports = async function (fastify, opts) {
   async function onGetPost (req, reply) {
     const { id } = req.params
 
-    const post = await postCol.findOne({ id })
-    assert(post !== null, 404)
+    const result = await elasticsearch.get({
+      index: 'moos',
+      type: '_doc',
+      id
+    })
 
-    return post
+    return result._source
+  }
+
+  fastify.route({
+    method: 'GET',
+    url: '/post',
+    schema: {
+      description: 'Get a post by its id',
+      querystring: 'post-search#',
+      response: {
+        200: {
+          type: 'array',
+          items: 'post-response#'
+        }
+      }
+    },
+    handler: onSearchPost
+  })
+
+  async function onSearchPost (req, reply) {
+    const { search } = req.query
+
+    const result = await elasticsearch.search({
+      index: 'moos',
+      type: '_doc',
+      body: {
+        query: { match: { text: search } }
+      }
+    })
+
+    return result.hits.hits.map(h => h._source)
   }
 
   fastify.route({
     method: 'POST',
-    url: '/create',
+    url: '/post/create',
     schema: {
       description: 'Create a new post',
       headers: {
@@ -47,11 +81,18 @@ module.exports = async function (fastify, opts) {
   })
 
   async function onCreate (req, reply) {
-    const { text, time } = req.body
+    const { text } = req.body
     const author = req.headers['x-username']
+    const time = Date.now()
 
     const id = hyperid()
-    await postCol.insertOne({ author, id, text, time })
+    await elasticsearch.index({
+      index: 'moos',
+      type: '_doc',
+      id,
+      body: { author, id, text, time }
+    })
+
     reply.code(201)
     return { id }
   }

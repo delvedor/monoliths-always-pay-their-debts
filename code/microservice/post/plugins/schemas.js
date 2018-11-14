@@ -35,6 +35,18 @@ module.exports = fp(async function (fastify, opts) {
   })
 
   fastify.addSchema({
+    $id: 'post-search',
+    type: 'object',
+    properties: {
+      search: {
+        type: 'string',
+        maxLength: 1000
+      }
+    },
+    required: ['search']
+  })
+
+  fastify.addSchema({
     $id: 'username',
     type: 'object',
     properties: {

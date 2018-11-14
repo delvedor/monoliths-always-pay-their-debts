@@ -1,62 +1,47 @@
-version: '2'
+version: '3.2'
 
 services:
-  mongo:
-    image: mongo:3.6
-    # ports:
-    #   - "27017:27017"
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.4.0
 
   moo-login:
     build: ./login
-    image: moo-login
-    # ports:
-    #   - "3030:3030"
+    image: moo-login-ms
+    command: ["npm", "run", "docker"]
+    ports:
+      - "3030:3030"
     environment:
       - FASTIFY_PORT=3030
     volumes:
       - ./login/:/usr/src/app
       - /usr/src/app/node_modules
     links:
-      - mongo
+      - elasticsearch
 
   moo-post:
     build: ./post
-    image: moo-post
-    # ports:
-    #   - "3031:3031"
+    image: moo-post-ms
+    command: ["npm", "run", "docker"]
+    ports:
+      - "3031:3031"
     environment:
       - FASTIFY_PORT=3031
     volumes:
       - ./post/:/usr/src/app
       - /usr/src/app/node_modules
     links:
-      - mongo
+      - elasticsearch
 
   moo-user:
     build: ./user
-    image: moo-user
-    # ports:
-    #   - "3032:3032"
+    image: moo-user-ms
+    command: ["npm", "run", "docker"]
+    ports:
+      - "3032:3032"
     environment:
       - FASTIFY_PORT=3032
     volumes:
       - ./user/:/usr/src/app
       - /usr/src/app/node_modules
     links:
-      - mongo
-
-  moo-gateway:
-    build: ./gateway
-    image: moo-gateway
-    ports:
-      - "3000:3000"
-    environment:
-      - FASTIFY_PORT=3000
-    volumes:
-      - ./gateway/:/usr/src/app
-      - /usr/src/app/node_modules
-    links:
-      - mongo
-      - moo-login
-      - moo-post
-      - moo-user
+      - elasticsearch

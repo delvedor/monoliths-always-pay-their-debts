@@ -1,7 +1,7 @@
-version: '2'
+version: '3.2'
 
 services:
-  mongo:
-    image: mongo:3.6
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.4.0
     ports:
-      - "27017:27017"
+      - "9200:9200"

@@ -1,11 +1,10 @@
 'use strict'
 
 const { test } = require('tap')
-const { build, close, createUser, basicAuth } = require('../helper')
-const App = require('../../app')
+const { build, close, createUser, basicAuth, sleep } = require('../helper')
 
 test('Should be able to create a post', async t => {
-  const fastify = await build(App)
+  const fastify = await build()
   await createUser(fastify, 'delvedor', 'winteriscoming')
 
   const response = await fastify.inject({
@@ -23,8 +22,12 @@ test('Should be able to create a post', async t => {
   const payload = JSON.parse(response.payload)
   t.is(typeof payload.id, 'string')
 
-  const post = await fastify.mongo.db.collection('post')
-    .findOne({ id: payload.id }, { _id: 0 })
+  const result = await fastify.elasticsearch.get({
+    index: 'moos',
+    type: '_doc',
+    id: payload.id
+  })
+  const post = result._source
 
   delete post._id
   t.is(typeof post.time, 'number')
@@ -39,7 +42,7 @@ test('Should be able to create a post', async t => {
 })
 
 test('Get a post by id', async t => {
-  const fastify = await build(App)
+  const fastify = await build()
   await createUser(fastify, 'delvedor', 'winteriscoming')
 
   const time = new Date().toISOString()
@@ -80,7 +83,7 @@ test('Get a post by id', async t => {
 })
 
 test('Get a post by id (404)', async t => {
-  const fastify = await build(App)
+  const fastify = await build()
   await createUser(fastify, 'delvedor', 'winteriscoming')
 
   const response = await fastify.inject({
@@ -97,6 +100,49 @@ test('Get a post by id (404)', async t => {
     message: 'Not Found',
     statusCode: 404
   })
+
+  await close(fastify)
+})
+
+test('Search a post', async t => {
+  const fastify = await build()
+  await createUser(fastify, 'delvedor', 'winteriscoming')
+
+  const time = new Date().toISOString()
+  var response = await fastify.inject({
+    method: 'POST',
+    url: '/post/create',
+    headers: {
+      authorization: basicAuth('delvedor', 'winteriscoming')
+    },
+    payload: {
+      text: 'May the force be with you',
+      time
+    }
+  })
+
+  t.strictEqual(response.statusCode, 201)
+  const { id } = JSON.parse(response.payload)
+
+  await sleep(1000)
+
+  response = await fastify.inject({
+    method: 'GET',
+    url: '/post?search=force',
+    headers: {
+      authorization: basicAuth('delvedor', 'winteriscoming')
+    }
+  })
+
+  t.strictEqual(response.statusCode, 200)
+  const payload = JSON.parse(response.payload)
+  t.is(typeof payload[0].time, 'number')
+  delete payload[0].time
+  t.deepEqual(payload, [{
+    id,
+    text: 'May the force be with you',
+    author: 'delvedor'
+  }])
 
   await close(fastify)
 })

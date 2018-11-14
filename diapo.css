@@ -1,0 +1,415 @@
+/***** FONTS *****/
+
+@import url('https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i');
+@import url('https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i');
+
+/***** COMMON *****/
+
+html {
+  height: 100%;
+}
+
+body {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 500;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+}
+
+h1, h2, h3, p {
+  margin: 0;
+}
+
+a {
+  color: #fff;
+  text-decoration-skip: ink;
+  border-radius: 6px;
+}
+
+.right {
+  text-align: right;
+}
+
+.center {
+  text-align: center;
+  margin: 0 auto;
+}
+
+.nobreak {
+  white-space: nowrap;
+}
+
+img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+}
+
+div.slide-container {
+  background-size: 100%;
+  display: flex;
+  align-items: center;
+}
+
+div.slide {
+  box-sizing: border-box;
+  padding: 4%;
+}
+
+div.slide.small {
+  padding: 15%;
+}
+
+div.slide.copyright-right p:last-child {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  font-size: 25px !important;
+}
+
+div.slide.copyright-left p:last-child {
+  position: fixed;
+  bottom: 25px;
+  left: 25px;
+  font-size: 25px !important;
+}
+
+/* normally not good, but ok in context of full screen directional navigation */
+.talk-mode .slide:focus {
+  outline: 0;
+}
+
+body.talk-mode {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+body.print-mode {
+  background: #fff;
+  color: #000;
+  font-weight: normal;
+  padding: 30px 20px;
+}
+
+body.print-mode div.sub-container {
+  padding: 10px 20px;
+  display: flex;
+  flex-flow: row wrap;
+  page-break-after: always;
+}
+
+ul.notes-list {
+  display: inline-block;
+  float: left;
+  vertical-align: top;
+}
+
+body.print-mode div.slide-container {
+  border: 1px solid #000;
+}
+
+body.jump-mode {
+  padding: 10px;
+}
+
+body.jump-mode div.sub-container {
+  display: inline-block;
+  vertical-align: top;
+  padding: 2px;
+}
+
+body.jump-mode div.slide-container {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+}
+
+body.jump-mode div.slide-container:hover {
+  border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+#diapo-progress-bar-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+}
+
+#diapo-progress-bar {
+  height: 5px;
+  width: 0;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  transition: width 0.5s;
+}
+
+/***** THEME *****/
+
+/* Colors:
+ *   Grey: #282c32
+ *   White: #f9f9f9
+ *   Magenta: #e61a7a
+ */
+
+em {
+  font-style: normal;
+  color: #e61a7a;
+}
+
+.dark {
+  background: #282c32;
+  color: #f9f9f9;
+}
+
+.dark a {
+  color: #7cbfe5;
+}
+
+.dark a:hover {
+  background: #4e5b6f;
+}
+
+.light {
+  background: #f9f9f9;
+  color: #282c32;
+}
+
+.light a {
+  color: #0889d1;
+}
+
+.light a:hover {
+  color: #0069a4;
+}
+
+.light div.boxed-em em {
+  /* color: #282c32; */
+  color: #f9f9f9;
+  background-color: #e61a7a;
+}
+
+.dark div.boxed-em em {
+  color: #f9f9f9;
+  background-color: #e61a7a;
+}
+
+#diapo-progress-bar {
+  background-color: #e61a7a;
+}
+
+/***** CODE *****/
+
+/**
+ * Monokai style - ported by Luigi Maselli - http://grigio.org
+ */
+.hljs {
+  display: block;
+  font-family:
+    San Francisco Mono,
+    Monaco,
+    Consolas,
+    Lucida Console,
+    DejaVu Sans Mono,
+    Bitstream Vera Sans Mono,
+    monospace;
+  overflow-x: auto;
+  font-weight: normal;
+}
+
+.dark .hljs {
+  color: #ddd;
+}
+
+.dark .hljs-tag,
+.dark .hljs-keyword,
+.dark .hljs-selector-tag,
+.dark .hljs-literal,
+.dark .hljs-strong,
+.dark .hljs-name {
+  color: #d13787;
+}
+
+.dark .hljs-code {
+  color: #66d9ef;
+}
+
+.dark .hljs-attribute,
+.dark .hljs-symbol,
+.dark .hljs-regexp,
+.dark .hljs-link {
+  color: #bf79db;
+}
+
+.light .hljs-class,
+.dark .hljs-string,
+.dark .hljs-bullet,
+.dark .hljs-subst,
+.dark .hljs-title,
+.dark .hljs-section,
+.dark .hljs-emphasis,
+.dark .hljs-type,
+.dark .hljs-built_in,
+.dark .hljs-builtin-name,
+.dark .hljs-selector-attr,
+.dark .hljs-selector-pseudo,
+.dark .hljs-addition,
+.dark .hljs-variable,
+.dark .hljs-template-tag,
+.dark .hljs-template-variable {
+  color: #a6e22e;
+}
+
+.dark .hljs-comment,
+.dark .hljs-quote,
+.dark .hljs-deletion,
+.dark .hljs-meta {
+  color: #c3c0af;
+}
+
+/**
+ * Monokai style - ported by Luigi Maselli - http://grigio.org
+ */
+.light .hljs {
+  color: #34383e;
+}
+
+.light .hljs-tag,
+.light .hljs-keyword,
+.light .hljs-selector-tag,
+.light .hljs-literal,
+.light .hljs-strong,
+.light .hljs-name {
+  color: #d13787;
+}
+
+.light .hljs-code {
+  color: #66d9ef;
+}
+
+.light .hljs-attribute,
+.light .hljs-symbol,
+.light .hljs-regexp,
+.light .hljs-number,
+.light .hljs-link {
+  color: #01988c;
+}
+
+.light .hljs-class,
+.light .hljs-string,
+.light .hljs-bullet,
+.light .hljs-subst,
+.light .hljs-title,
+.light .hljs-section,
+.light .hljs-emphasis,
+.light .hljs-type,
+.light .hljs-built_in,
+.light .hljs-builtin-name,
+.light .hljs-selector-attr,
+.light .hljs-selector-pseudo,
+.light .hljs-addition,
+.light .hljs-variable,
+.light .hljs-template-tag,
+.light .hljs-template-variable {
+  color: #5d4fa1;
+}
+
+.light .hljs-comment,
+.light .hljs-quote,
+.light .hljs-deletion,
+.light .hljs-meta {
+  color: #a0a1a7;
+}
+
+/***** CUSTOM *****/
+
+body.intro-background {
+  background-image: url('images/intro.jpg');
+  background-size: cover;
+  color: #f9f9f9;
+}
+
+body.fastify-background {
+  background-image: url('images/fastify-background.png');
+  background-size: cover;
+}
+
+body.hack-background {
+  background-image: url('images/hack.png');
+  background-size: cover;
+}
+
+.border-left h1 {
+  border-left: 5px solid white;
+  padding-left: 20px;
+}
+
+div.slide.intro-title {
+  padding: 18% 18% 18% 5%;
+}
+
+.center-image p img {
+  text-align: center;
+  font-size: initial;
+  max-width: 60% !important;
+}
+
+.benchmarks-image p img, .gateway-image p img {
+  text-align: center;
+  font-size: initial;
+  max-width: 80% !important;
+}
+
+.colored-li ul {
+  list-style: none;
+}
+
+.colored-li ul li::before {
+  content: "\2022";
+  color: #e61a7a;
+  font-weight: bold;
+  display: inline-block;
+  width: 0.7em;
+}
+
+div.row {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  align-items: center;
+}
+
+div.async-plugin > h3 {
+  border: 8px #e61a7a solid;
+  padding: 20px 30px;
+  transform: rotate(-10deg);
+}
+
+.white-text {
+  color: #fff;
+}
+
+div.slide.demo {
+  padding: 25%;
+}
+
+.clients p img {
+  width: 55%;
+  padding-top: 20px;
+}
+
+div.slide.basic-auth p img {
+  margin-top: 50px;
+}
+
+div.slide.code-line-height code {
+  line-height: 180%;
+}
