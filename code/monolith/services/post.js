@@ -10,7 +10,7 @@ module.exports = async function (fastify, opts) {
 
   fastify.route({
     method: 'GET',
-    url: '/:id',
+    url: '/post/:id',
     schema: {
       description: 'Get a post by its id',
       params: 'post-id#',
@@ -35,7 +35,7 @@ module.exports = async function (fastify, opts) {
 
   fastify.route({
     method: 'GET',
-    url: '/',
+    url: '/post',
     schema: {
       description: 'Get a post by its id',
       querystring: 'post-search#',
@@ -65,7 +65,7 @@ module.exports = async function (fastify, opts) {
 
   fastify.route({
     method: 'POST',
-    url: '/create',
+    url: '/post/create',
     schema: {
       description: 'Create a new post',
       headers: {
@@ -84,8 +84,8 @@ module.exports = async function (fastify, opts) {
     const { text } = req.body
     const author = req.headers['x-username']
     const time = Date.now()
-
     const id = hyperid()
+
     await elasticsearch.index({
       index: 'moos',
       type: '_doc',
@@ -97,7 +97,3 @@ module.exports = async function (fastify, opts) {
     return { id }
   }
 }
-
-// autoload will automtically add this prefix to all the registered routes
-// if you want to avoid this, just remove the following line
-module.exports.autoPrefix = '/post'

@@ -7,7 +7,7 @@ module.exports = async function (fastify, opts) {
 
   fastify.route({
     method: 'GET',
-    url: '/:username/post',
+    url: '/user/:username/post',
     schema: {
       description: 'Get post created by the user',
       params: 'username#',
@@ -33,5 +33,3 @@ module.exports = async function (fastify, opts) {
     return result.hits.hits.map(h => h._source)
   }
 }
-
-module.exports.autoPrefix = '/user'
