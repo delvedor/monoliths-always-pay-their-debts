@@ -374,14 +374,14 @@ class copyright-right
 
 ---
 <!--
-class small nobreak
+class small nobreak colored-li
 -->
 
-Presentation:<br/>
-https://github.com/delvedor/monoliths-always-pay-their-debts
+- Presentation:<br/>
+https://fastify.rocks/monoliths-talk
 <br/><br/>
-Code:<br/>
-https://github.com/delvedor/monoliths-always-pay-their-debts/tree/master/code
+- Code:<br/>
+https://fastify.rocks/monoliths-code
 
 ---
 <!--
