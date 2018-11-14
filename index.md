@@ -41,6 +41,7 @@ A user should be able to:
 - Signup!
 - Post a new moo
 - Get a post by id
+- Search a post
 - Get all the posts of a user
 
 ---
@@ -54,6 +55,7 @@ The API will expose three different services, *login*, *post* and *user*.
 ```txt
 /signup
 /post/:id
+/post?search=${text}
 /post/create
 /user/:username/posts
 ```
@@ -372,8 +374,19 @@ class copyright-right
 
 ---
 <!--
-bodyclass fastify-background
-class copyright-right small white-text
+class small nobreak
+-->
+
+Presentation:<br/>
+https://github.com/delvedor/monoliths-always-pay-their-debts
+<br/><br/>
+Code:<br/>
+https://github.com/delvedor/monoliths-always-pay-their-debts/tree/master/code
+
+---
+<!--
+bodyclass intro-background
+class copyright-right small
 -->
 
 # Thanks!
