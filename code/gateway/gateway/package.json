@@ -1,0 +1,34 @@
+{
+  "name": "moo-gateway",
+  "version": "0.1.0",
+  "private": true,
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "standard && tap test/*.test.js test/*/*.test.js test/*/*/*.test.js",
+    "start": "fastify start app.js",
+    "dev": "fastify start -l info -P app.js",
+    "docker": "./wait-cluster.sh && npm run dev",
+    "lint": "standard --fix"
+  },
+  "keywords": [],
+  "author": "Tomas Della Vedova - @delvedor (http://delved.org)",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^3.0.2",
+    "fastify": "^1.13.0",
+    "fastify-autoload": "^0.5.1",
+    "fastify-basic-auth": "^0.2.0",
+    "fastify-cli": "^0.25.2",
+    "fastify-http-proxy": "^0.8.0",
+    "fastify-elasticsearch": "^0.4.0",
+    "fastify-plugin": "^1.2.1",
+    "fastify-sensible": "^0.2.0",
+    "is-docker": "^1.1.0",
+    "make-promises-safe": "^3.0.0"
+  },
+  "devDependencies": {
+    "standard": "^12.0.1",
+    "tap": "^12.0.1"
+  }
+}
