@@ -37,7 +37,7 @@ module.exports = async function (fastify, opts) {
     method: 'GET',
     url: '/post',
     schema: {
-      description: 'Get a post by its id',
+      description: 'Search a post',
       querystring: 'post-search#',
       response: {
         200: {
