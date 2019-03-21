@@ -1,7 +1,7 @@
 'use strict'
 
 module.exports = async function (fastify, opts) {
-  const { elasticsearch } = fastify
+  const { elastic } = fastify
 
   fastify.addHook('preHandler', fastify.basicAuth)
 
@@ -23,13 +23,13 @@ module.exports = async function (fastify, opts) {
 
   async function onGetPost (req, reply) {
     const { username } = req.params
-    const result = await elasticsearch.search({
+    const { body } = await elastic.search({
       index: 'moos',
       body: {
         query: { term: { 'author.keyword': username } }
       }
     })
 
-    return result.hits.hits.map(h => h._source)
+    return body.hits.hits.map(h => h._source)
   }
 }

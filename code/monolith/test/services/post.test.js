@@ -22,12 +22,12 @@ test('Should be able to create a post', async t => {
   const payload = JSON.parse(response.payload)
   t.is(typeof payload.id, 'string')
 
-  const result = await fastify.elasticsearch.get({
+  const { body } = await fastify.elastic.get({
     index: 'moos',
     type: '_doc',
     id: payload.id
   })
-  const post = result._source
+  const post = body._source
 
   delete post._id
   t.is(typeof post.time, 'number')

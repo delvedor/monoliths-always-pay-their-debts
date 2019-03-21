@@ -21,15 +21,16 @@ test('Should create a new user', async t => {
     { status: 'ok', token: basicAuth('delvedor', 'winteriscoming') }
   )
 
-  const result = await fastify.elasticsearch.search({
+  const { body } = await fastify.elastic.search({
     index: 'users',
     size: 1,
-    ignore: [404],
     body: {
       query: { term: { 'username.keyword': 'delvedor' } }
     }
+  }, {
+    ignore: [404]
   })
-  const user = result.hits.hits[0]._source
+  const user = body.hits.hits[0]._source
 
   t.ok(user !== null)
   t.is(typeof user.username, 'string')

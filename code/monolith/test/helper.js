@@ -12,7 +12,7 @@ async function build (plugin) {
     .register(fp(App))
     .after((err, instance, done) => {
       if (err) throw err
-      instance.elasticsearch.indices.delete({ index: '*', ignore: 404 }, err => {
+      instance.elastic.indices.delete({ index: '*' }, { ignore: 404 }, err => {
         if (err) throw err
         done()
       })
@@ -29,9 +29,8 @@ async function close (fastify) {
 
 async function createUser (fastify, username, password) {
   const hashedPassword = await bcrypt.hash(password, saltRounds)
-  await fastify.elasticsearch.index({
+  await fastify.elastic.index({
     index: 'users',
-    type: '_doc',
     refresh: 'wait_for',
     body: { username, password: hashedPassword }
   })

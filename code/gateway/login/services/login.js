@@ -3,7 +3,7 @@
 const saltRounds = 10
 
 module.exports = async function (fastify, opts) {
-  const { assert, elasticsearch, bcrypt } = fastify
+  const { assert, elastic, bcrypt } = fastify
 
   fastify.route({
     method: 'POST',
@@ -17,24 +17,24 @@ module.exports = async function (fastify, opts) {
 
   async function onSignup (req, reply) {
     const { username, password } = req.body
-
-    const result = await elasticsearch.search({
+    const { statusCode } = await elastic.search({
       index: 'users',
       size: 1,
-      ignore: [404],
       body: {
         query: { term: { 'username.keyword': username } }
       }
+    }, {
+      ignore: [404]
     })
+
     assert(
-      result.hits == null || result.hits.total === 0, 400,
+      statusCode === 404, 400,
       `The user '${username}' already exists`
     )
 
     const hashedPassword = await bcrypt.hash(password, saltRounds)
-    await elasticsearch.index({
+    await elastic.index({
       index: 'users',
-      type: '_doc',
       refresh: 'wait_for',
       body: { username, password: hashedPassword }
     })
