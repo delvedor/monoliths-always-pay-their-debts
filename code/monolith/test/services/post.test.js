@@ -29,10 +29,8 @@ test('Should be able to create a post', async t => {
   })
   const post = body._source
 
-  delete post._id
   t.is(typeof post.time, 'number')
-  delete post.time
-  t.deepEqual(post, {
+  t.match(post, {
     text: 'May the force be with you',
     author: 'delvedor',
     id: payload.id
@@ -72,8 +70,7 @@ test('Get a post by id', async t => {
   t.strictEqual(response.statusCode, 200)
   const payload = JSON.parse(response.payload)
   t.is(typeof payload.time, 'number')
-  delete payload.time
-  t.deepEqual(payload, {
+  t.match(payload, {
     id,
     text: 'May the force be with you',
     author: 'delvedor'
@@ -137,8 +134,7 @@ test('Search a post', async t => {
   t.strictEqual(response.statusCode, 200)
   const payload = JSON.parse(response.payload)
   t.is(typeof payload[0].time, 'number')
-  delete payload[0].time
-  t.deepEqual(payload, [{
+  t.match(payload, [{
     id,
     text: 'May the force be with you',
     author: 'delvedor'

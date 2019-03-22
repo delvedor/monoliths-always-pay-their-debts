@@ -6,16 +6,23 @@ const fp = require('fastify-plugin')
 const bcrypt = require('bcrypt')
 const saltRounds = 10
 
+// build the server in the same way as `fastify-cli` is doing
 async function build (plugin) {
+  // create a  Fastify instance
   const fastify = Fastify()
   fastify
+    // register our entire application
     .register(fp(App))
+    // if there is some error (eg: database not available)
+    // let's crash right away
     .after((err, instance, done) => {
       if (err) throw err
-      instance.elastic.indices.delete({ index: '*' }, { ignore: 404 }, err => {
-        if (err) throw err
-        done()
-      })
+      // for the sake of the test, let's delete everything
+      instance.elastic.indices.delete(
+        { index: '*' }, { ignore: 404 }, err => {
+          if (err) throw err
+          done()
+        })
     })
 
   // wait the everything is ready before run the test

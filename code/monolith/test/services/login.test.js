@@ -6,6 +6,8 @@ const bcrypt = require('bcrypt')
 
 test('Should create a new user', async t => {
   const fastify = await build()
+  // fake http injection, it allows us to call
+  // our routes without running an actual http server
   const response = await fastify.inject({
     method: 'POST',
     url: '/signup',

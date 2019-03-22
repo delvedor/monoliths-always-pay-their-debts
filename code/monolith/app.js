@@ -6,6 +6,9 @@ const path = require('path')
 const AutoLoad = require('fastify-autoload')
 const bcrypt = require('bcrypt')
 
+// This is our entry point, but we are exporting a functon
+// and we are never calling `.listen`, why?
+// Because `fastify-cli` is doing the legwork for us!
 module.exports = async function (fastify, opts) {
   fastify
     .decorate('bcrypt', bcrypt)
@@ -26,6 +29,7 @@ module.exports = async function (fastify, opts) {
     })
 }
 
+// `this` is the Fastify instance
 async function validate (username, password, req, reply) {
   // search the username inside the database
   const { body, statusCode } = await this.elastic.search({
