@@ -15,6 +15,8 @@ module.exports = async function (fastify, opts) {
     // Adds some useful utilities to Fastify
     .register(require('fastify-sensible'))
     // Basic authentication utility
+    // it exposes a function to run the authentication
+    // in `fastify.basicAuth`
     .register(require('fastify-basic-auth'), { validate })
     // Loads everything declared inside the plugins folder
     .register(AutoLoad, {

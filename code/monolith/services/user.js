@@ -3,7 +3,7 @@
 module.exports = async function (fastify, opts) {
   const { elastic } = fastify
 
-  fastify.addHook('preHandler', fastify.basicAuth)
+  fastify.addHook('onRequest', fastify.basicAuth)
 
   fastify.route({
     method: 'GET',

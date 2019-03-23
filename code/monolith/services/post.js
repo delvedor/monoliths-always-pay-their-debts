@@ -6,7 +6,13 @@ module.exports = async function (fastify, opts) {
   const { elastic } = fastify
   const hyperid = Hyperid({ urlSafe: true })
 
-  fastify.addHook('preHandler', fastify.basicAuth)
+  // We register an hook to interact with
+  // the request response lifecycle
+  // and we run our basic authentication logic.
+  // Thanks to the encapsulation system,
+  // the authentication will be executed only
+  // inside this plugin.
+  fastify.addHook('onRequest', fastify.basicAuth)
 
   fastify.route({
     method: 'GET',
