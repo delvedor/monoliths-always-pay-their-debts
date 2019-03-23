@@ -75,6 +75,8 @@ class copyright-right
 -->
 
 ```js
+'use strict'
+
 const fastify = require('fastify')()
 
 fastify.get('/', async (request, reply) => {
