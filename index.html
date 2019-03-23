@@ -79,7 +79,9 @@ class copyright-right
 class copyright-right
 -->
 
-<pre><code class="language-js">const fastify = require(&#39;fastify&#39;)()
+<pre><code class="language-js">&#39;use strict&#39;
+
+const fastify = require(&#39;fastify&#39;)()
 
 fastify.get(&#39;/&#39;, async (request, reply) =&gt; {
   return { hello: &#39;world&#39; }
