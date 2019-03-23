@@ -3,10 +3,16 @@
 const Hyperid = require('hyperid')
 
 module.exports = async function (fastify, opts) {
-  const { elasticsearch } = fastify
+  const { elastic } = fastify
   const hyperid = Hyperid({ urlSafe: true })
 
-  fastify.addHook('preHandler', fastify.basicAuth)
+  // We register an hook to interact with
+  // the request response lifecycle
+  // and we run our basic authentication logic.
+  // Thanks to the encapsulation system,
+  // the authentication will be executed only
+  // inside this plugin.
+  fastify.addHook('onRequest', fastify.basicAuth)
 
   fastify.route({
     method: 'GET',
@@ -22,22 +28,26 @@ module.exports = async function (fastify, opts) {
   })
 
   async function onGetPost (req, reply) {
-    const { id } = req.params
-
-    const result = await elasticsearch.get({
+    const { body, statusCode } = await elastic.get({
       index: 'moos',
-      type: '_doc',
-      id
+      id: req.params.id
+    }, {
+      ignore: [404]
     })
 
-    return result._source
+    if (statusCode === 404) {
+      reply.code(404)
+      return new Error('Not Found')
+    }
+
+    return body._source
   }
 
   fastify.route({
     method: 'GET',
     url: '/post',
     schema: {
-      description: 'Get a post by its id',
+      description: 'Search a post',
       querystring: 'post-search#',
       response: {
         200: {
@@ -52,15 +62,14 @@ module.exports = async function (fastify, opts) {
   async function onSearchPost (req, reply) {
     const { search } = req.query
 
-    const result = await elasticsearch.search({
+    const { body } = await elastic.search({
       index: 'moos',
-      type: '_doc',
       body: {
         query: { match: { text: search } }
       }
     })
 
-    return result.hits.hits.map(h => h._source)
+    return body.hits.hits.map(h => h._source)
   }
 
   fastify.route({
@@ -86,9 +95,8 @@ module.exports = async function (fastify, opts) {
     const time = Date.now()
     const id = hyperid()
 
-    await elasticsearch.index({
+    await elastic.index({
       index: 'moos',
-      type: '_doc',
       id,
       body: { author, id, text, time }
     })

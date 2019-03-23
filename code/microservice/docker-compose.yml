@@ -2,7 +2,9 @@ version: '3.2'
 
 services:
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.4.0
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.0.0-beta1
+    environment:
+      - "discovery.type=single-node"
 
   moo-login:
     build: ./login
